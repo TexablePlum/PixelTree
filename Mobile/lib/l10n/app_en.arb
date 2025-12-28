@@ -1,0 +1,257 @@
+{
+  "@@locale": "en",
+  
+  "appName": "PixelTree",
+  "appTagline": "Smart ARGB Christmas Lights",
+  
+  "onboardingWelcomeTitle": "Welcome to PixelTree! 🎄",
+  "onboardingWelcomeBody": "Transform your Christmas with smart ARGB lights",
+  "onboardingSetupTitle": "Simple WiFi Setup",
+  "onboardingSetupBody": "Connect your lights to WiFi in just a few taps",
+  "onboardingControlTitle": "Endless Possibilities",
+  "onboardingControlBody": "Choose colors, effects, and create magic",
+  "onboardingGetStarted": "Let's Get Started!",
+  "onboardingDontShowAgain": "Don't show this again",
+  
+  "connectionModeTitle": "WiFi Setup Method",
+  "connectionModeSubtitle": "Choose how to configure your PixelTree",
+  "connectionRecommended": "RECOMMENDED",
+  "connectionBleWifiTitle": "BLE + WiFi",
+  "connectionBleWifiSubtitle": "Bluetooth Low Energy",
+  "connectionBleWifiDescription": "Connect via Bluetooth and configure WiFi settings. Your PixelTree will then join your WiFi network.",
+  "connectionBleWifiButton": "Start Setup",
+  "connectionApTitle": "Access Point Mode",
+  "connectionApDescription": "Direct WiFi connection to PixelTree",
+  "connectionModeHelp": "Not sure? Use the recommended method for easiest setup.",
+  "connectionAlreadyHaveDevices": "Already have devices set up?",
+  
+  "apConnectionTitle": "Connect to Access Point",
+  "apConnectionSubtitle": "Follow these steps to connect",
+  "apConnectionStep1Title": "Open WiFi Settings",
+  "apConnectionStep1Desc": "Go to your phone's WiFi settings",
+  "apConnectionStep2Title": "Find PixelTree Network",
+  "apConnectionStep2Desc": "Look for \"PixelTree-XXXX\"",
+  "apConnectionStep3Title": "Connect",
+  "apConnectionStep3Desc": "Tap to connect (no password)",
+  "apConnectionStep4Title": "Return Here",
+  "apConnectionStep4Desc": "Come back and tap \"Continue\"",
+  "apConnectionInfo": "Phone will temporarily disconnect from internet",
+  "apConnectionButton": "I'm Connected",
+  "apConnectionNotConnected": "Not Connected",
+  "apConnectionNotConnectedMessage": "You are connected to {wifiName}.\n\nPlease connect to the PixelTree access point first.",
+  "@apConnectionNotConnectedMessage": {
+    "placeholders": {
+      "wifiName": {"type": "String"}
+    }
+  },
+  "apConnectionNotConnectedNoWifi": "Please connect to the PixelTree access point first.",
+  "apConnectionPermissionRequired": "Permission Required",
+  "apConnectionPermissionMessage": "Location permission is required to detect WiFi network.\n\nPlease grant permission in Settings.",
+  "apConnectionOpenSettings": "Open Settings",
+  
+  "scanTitle": "Find Your PixelTree",
+  "scanScanning": "Searching for devices...",
+  "scanNoDevices": "No devices found. Make sure your PixelTree is powered on.",
+  "scanRefresh": "Refresh Scan",
+  "scanConnect": "Connect",
+  "scanConfigured": "Configured",
+  "scanReadyToConnect": "Ready to connect",
+  
+  "provisioningTitle": "WiFi Setup Wizard",
+  "provisioningStep": "Step",
+  "provisioningOf": "of",
+  "provisioningKeyExchangeTitle": "Establishing Secure Connection...",
+  "provisioningKeyExchangeBody": "Exchanging encryption keys...\nThis keeps your WiFi password safe during transfer.",
+  "provisioningSelectNetworkTitle": "Select Your WiFi Network",
+  "provisioningScanningNetworks": "Scanning WiFi Networks",
+  "provisioningScanningMessage": "Please wait while your device scans for available networks...",
+  "provisioningEnterPasswordTitle": "Enter WiFi Password",
+  "provisioningPasswordHint": "Password...",
+  "provisioningPasswordInfo": "Your password is encrypted before being sent to the device using AES-128.",
+  "provisioningNetworkLabel": "Network: {ssid}",
+  "@provisioningNetworkLabel": {
+    "placeholders": {
+      "ssid": {"type": "String"}
+    }
+  },
+  "provisioningConnectingTitle": "Connecting to WiFi...",
+  "provisioningConnectingBody": "PixelTree is connecting to your network.\n\nThis may take up to 30 seconds...",
+  "provisioningSuccessTitle": "Connected Successfully!",
+  "provisioningFailedTitle": "Connection Failed",
+  "provisioningFailedBody": "Could not connect to WiFi. Please check your password and try again.",
+  "provisioningConnectionFailed": "Connection failed: {error}",
+  "@provisioningConnectionFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "provisioningWrongPassword": "Wrong WiFi password. Please check and try again.",
+  "provisioningSsidNotFound": "WiFi network disappeared. Please select another.",
+  "provisioningAuthFailed": "WiFi authentication failed. Please check password.",
+  "provisioningTimeout": "Connection timeout. Please try again.",
+  "provisioningError": "Error: {error}",
+  "@provisioningError": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  
+  "buttonContinue": "Continue",
+  "buttonBack": "Back",
+  "buttonRetry": "Retry",
+  "buttonSkip": "Skip",
+  "buttonConnect": "Connect",
+  "buttonCancel": "Cancel",
+  "buttonOk": "OK",
+  "buttonRefresh": "Refresh",
+  
+  "myDevicesTitle": "My Devices",
+  "myDevicesAddDevice": "Add Device",
+  "myDevicesSavedDevices": "Saved Devices",
+  "myDevicesDiscovered": "Discovered on Network",
+  "myDevicesNoSaved": "No saved devices yet",
+  "myDevicesNoSavedSubtitle": "Add devices via BLE or save discovered ones below",
+  "myDevicesNoDiscovered": "No new devices found",
+  "myDevicesNoDiscoveredSubtitle": "Make sure devices are powered on and connected to the same WiFi",
+  "myDevicesScanning": "Scanning network...",
+  "myDevicesNoDevicesYet": "No Devices Yet",
+  "myDevicesNoDevicesSubtitle": "Add your first PixelTree device\nto get started",
+  "myDevicesRemoveDevice": "Remove Device",
+  "myDevicesRemoveTitle": "Remove Device?",
+  "myDevicesRemoveMessage": "Remove {deviceName} from your saved devices?",
+  "@myDevicesRemoveMessage": {
+    "placeholders": {
+      "deviceName": {"type": "String"}
+    }
+  },
+  "myDevicesRemoved": "{deviceName} removed",
+  "@myDevicesRemoved": {
+    "placeholders": {
+      "deviceName": {"type": "String"}
+    }
+  },
+  "myDevicesSaved": "{deviceName} saved!",
+  "@myDevicesSaved": {
+    "placeholders": {
+      "deviceName": {"type": "String"}
+    }
+  },
+  "myDevicesOfflineTitle": "{deviceName} Offline",
+  "@myDevicesOfflineTitle": {
+    "placeholders": {
+      "deviceName": {"type": "String"}
+    }
+  },
+  "myDevicesOfflineMessage": "Device is not reachable on the network.",
+  "myDevicesTroubleshooting": "Troubleshooting tips:",
+  "myDevicesTip1": "• Check device is powered on",
+  "myDevicesTip2": "• Verify device is connected to WiFi",
+  "myDevicesTip3": "• Ensure phone is on same network",
+  "myDevicesTip4": "• Try refreshing device status",
+  "myDevicesSearching": "Searching for device...",
+  "myDevicesNotFound": "Device not found on network.\n\nMake sure:\n• Device is powered on\n• Device is connected to WiFi\n• Phone is on same network",
+  
+  "myDevicesOnline": "Online",
+  "myDevicesOffline": "Offline",
+  "myDevicesScanningBtn": "Scanning...",
+  "myDevicesCheckingBtn": "Checking...",
+  "myDevicesRefreshBtn": "Refresh",
+  "myDevicesDelete": "Delete",
+  "myDevicesNew": "NEW",
+  "myDevicesDeviceOffline": "{deviceName} Offline",
+  "@myDevicesDeviceOffline": {
+    "placeholders": {
+      "deviceName": {"type": "String"}
+    }
+  },
+  "myDevicesLastSeenJustNow": "Last seen just now",
+  "myDevicesLastSeenMinutes": "Last seen {minutes} min ago",
+  "@myDevicesLastSeenMinutes": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "myDevicesLastSeenHours": "Last seen {hours} hours ago",
+  "@myDevicesLastSeenHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "myDevicesLastSeenDays": "Last seen {days} days ago",
+  "@myDevicesLastSeenDays": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "myDevicesLastSeenWeeks": "Last seen {weeks} weeks ago",
+  "@myDevicesLastSeenWeeks": {
+    "placeholders": {
+      "weeks": {"type": "int"}
+    }
+  },
+  
+  "ledControlNoConnection": "No Connection",
+  "ledControlTryAgain": "Try Again",
+  
+  "dashboardTitle": "LED Control",
+  "dashboardConnected": "Connected",
+  "dashboardDisconnected": "Disconnected",
+  "dashboardColor": "Color",
+  "dashboardBrightness": "Brightness",
+  "dashboardEffects": "Effects",
+  "dashboardApply": "Apply Changes",
+  
+  "effectSolid": "Solid",
+  "effectFade": "Fade",
+  "effectRainbow": "Rainbow",
+  "effectChase": "Chase",
+  "effectTwinkle": "Twinkle",
+  
+  "errorBluetoothOff": "Please turn on Bluetooth to connect to your PixelTree",
+  "errorLocationPermission": "Location permission is required for Bluetooth scanning",
+  "errorBluetoothPermission": "Bluetooth permission is required to connect",
+  "errorDeviceNotFound": "Can't find your PixelTree. Make sure it's powered on and nearby.",
+  "errorConnectionFailed": "Couldn't connect. Let's try again!",
+  "errorUnknown": "Something went wrong. Please try again.",
+  
+  "categoryStatic": "Static",
+  "categoryWave": "Wave",
+  "categoryChase": "Chase",
+  "categoryTwinkle": "Twinkle",
+  "categoryFire": "Fire",
+  "categoryChristmas": "Christmas",
+  "categorySpecial": "Special",
+  "categoryBreathing": "Breathing",
+  "categoryAlarm": "Alarm",
+  
+  "colorModeWarm": "Warm",
+  "colorModeCold": "Cold",
+  "colorModeMulti": "Multi",
+  "colorModePalette": "Palette",
+  
+  "directionRight": "Right →",
+  "directionLeft": "← Left",
+  
+  "paramSpeed": "Speed",
+  "paramColor": "Color",
+  "paramBrightness": "Brightness",
+  "paramIntensity": "Intensity",
+  "paramSize": "Size",
+  "paramWidth": "Width",
+  "paramTrail": "Trail",
+  "paramFrequency": "Frequency",
+  "paramAmplitude": "Amplitude",
+  "paramPalette": "Palette",
+  "paramDirection": "Direction",
+  "paramStyle": "Style",
+  "paramMode": "Mode",
+  "paramDual": "Dual",
+  "paramRainbow": "Rainbow",
+  "paramSparkle": "Sparkle",
+  "paramFade": "Fade",
+  "paramGap": "Gap",
+  "paramDots": "Dots",
+  "paramColors": "Colors",
+  
+  "colorPickerTitle": "Pick a Color"
+}
