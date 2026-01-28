@@ -9,8 +9,7 @@ class PixelTreeDevice {
   final BluetoothDevice bluetoothDevice;
   final String name; // e.g., "PixelTree-A1B2"
   final int rssi; // Signal strength in dBm
-  final bool
-  isConfigured; // Has WiFi credentials (optional, may not be known initially)
+  final bool isConfigured; // Has WiFi credentials (optional)
 
   const PixelTreeDevice({
     required this.bluetoothDevice,

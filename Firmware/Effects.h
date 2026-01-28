@@ -268,7 +268,6 @@ void effectOscillate() {
     }
     
     // Color based on position: left side = colorPrimary, right side = colorSecondary
-    // Use position-weighted color (no HSV to avoid hue rotation issues)
     CRGB pointColor;
     if (position < NUM_LEDS / 2) {
         // Left half - mostly colorPrimary

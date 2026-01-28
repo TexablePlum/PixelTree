@@ -1,5 +1,5 @@
 \documentclass[12pt, a4paper, twoside]{report}
-% --- Pakiety i kodowanie ---
+% --- Pakiety ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
@@ -8,6 +8,25 @@
 \usepackage{titlesec} 
 \usepackage{indentfirst}
 \usepackage{fancyhdr} % Dla stopki na stronie tytułowej
+\usepackage{listings} % Dla kodu źródłowego
+\usepackage{xcolor}   % Dla kolorowania kodu
+\usepackage[hidelinks]{hyperref} % Dla linków
+\usepackage{float}    % Dla precyzyjnego pozycjonowania figur
+\usepackage{caption}  % Dla ładniejszych podpisów
+\usepackage{subcaption} % Dla subfigur
+\usepackage{multirow}  % Dla łączenia wierszy w tabelach
+\usepackage{booktabs}  % Dla profesjonalnych tabel (toprule, midrule, bottomrule)
+\usepackage{longtable} % Dla tabel wielostronicowych
+\usepackage{colortbl}  % Dla kolorowania wierszy w tabelach
+\usepackage{enumitem}  % Dla konfiguracji list (noitemsep)
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{tikz}        % Dla diagramów
+\usepackage{amsmath}     % Dla wzorów
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc}
+\usepackage[edges]{forest}  % Dla drzew katalogów
+\onehalfspacing          % interlinia 1.5
+\setcounter{secnumdepth}{3} % Numerowanie sekcji aż do (np. 5.4.2.1)
 
 % --- USTAWIENIA MARGINESÓW ---
 \usepackage{geometry}
@@ -26,6 +45,35 @@
 }
 \usepackage{emptypage}
 
+% --- FORMATOWANIE KODU ŹRÓDŁOWEGO ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% --- POLSKIE NAZWY DLA LISTINGÓW ---
+\renewcommand{\lstlistlistingname}{Spis listingów}
+
 % --- FORMATOWANIE ROZDZIAŁÓW ---
 \titleformat{\chapter}[display]
     {\normalfont\huge\bfseries}
@@ -34,12 +82,12 @@
     {\Huge}
 \titlespacing*{\chapter}
     {0pt}     % lewy margines
-    {0pt}     % odstęp PRZED tytułem (było domyślnie 50pt)
+    {0pt}     % odstęp PRZED tytułem
     {20pt}    % odstęp PO tytule
 
 \begin{document}
 
-% Wyłącz numerację dla stron wstępnych
+% Wyłącza numerację dla stron wstępnych
 \pagenumbering{gobble}
 
 % --- STRONA TYTUŁOWA ---
@@ -48,15 +96,15 @@
     % Logo
     \includegraphics{logo_polsl.png} 
     
-    \vfill % Elastyczny odstęp
+    \vfill
     
     % Typ pracy
     {\bfseries \LARGE PROJEKT INŻYNIERSKI \par}
     
-    \vspace{1cm} % Stały odstęp między typem a tytułem
+    \vspace{1cm}
     
     % Temat pracy
-    {\bfseries \Large „System sterowania adresowalnym oświetleniem LED z wykorzystaniem mikrokontrolera ESP32 oraz aplikacji mobilnej" \par}
+    {\bfseries \Large „Projekt i realizacja systemu oświetlenia dekoracyjnego ARGB LED z wykorzystaniem mikrokontrolera ESP32 wraz z dedykowaną aplikacją mobilną" \par}
     
     \vfill
     
@@ -75,7 +123,7 @@
     \centering
     
     % Promotor
-    {\bfseries PROWADZĄCY PRACĘ / PROMOTOR \par}
+    {\bfseries PROWADZĄCY PRACĘ \par}
     dr inż. Michał JELEŃ \par
     
     \vfill
@@ -89,24 +137,24 @@
     \thispagestyle{fancy}
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
-    \fancyfoot[C]{GLIWICE, 2026} % Stopka wyśrodkowana
+    \fancyfoot[C]{GLIWICE 2026} % Stopka wyśrodkowana
 \end{titlepage}
 \cleardoublepage
 
 % --- STRESZCZENIE ---
 \thispagestyle{empty} 
 \noindent \textbf{Tytuł pracy:} \\
-System sterowania adresowalnym oświetleniem LED z wykorzystaniem mikrokontrolera ESP32 oraz aplikacji mobilnej.
+Projekt i realizacja systemu oświetlenia dekoracyjnego ARGB LED z wykorzystaniem mikrokontrolera ESP32 wraz z dedykowaną aplikacją mobilną.
 
 \vspace{0.5cm}
 
 \noindent \textbf{Streszczenie:} \\
-Wpisać tekst streszczenia...
+Projekt przedstawia kompleksowy system sterowania łańcuchem lampek choinkowych ARGB LED (WS2812D), składający się z: mikrokontrolera ESP32-S3 Plus z dedykowanym firmware, aplikacji na urządzenia mobilne z systemami Android/IOS napisanej w wieloplatformowym framework-u Flutter oraz obudowy zaprojektowanej i wykonanej w technologii druku 3D. System oferuje ponad 40 w pełni konfigurowalnych efektów świetlnych, dwa tryby połączenia (bezpośredni przez Access Point lub przez sieć domową WiFi konfigurowaną z użyciem BLE) oraz intuicyjny interfejs użytkownika z obsługą języka polskiego i angielskiego.
 
 \vspace{0.5cm}
 
 \noindent \textbf{Słowa kluczowe:} \\
-Wpisać słowa kluczowe...
+Mikrokontroler ESP32, Adresowalne Diody LED, RGB, Oświetlenie Dekoracyjne, Aplikacja Mobilna, Dart, Flutter, Android, IOS, Oprogramowanie Układowe, C++, Arduino, Bluetooth Low Energy, WiFi, Bezprzewodowe Sterowanie, REST API, mDNS, Internet Rzeczy, Inteligentny Dom, FreeRTOS, druk 3D.
 
 \vspace{1.5cm}
 \hrule 
@@ -114,22 +162,36 @@ Wpisać słowa kluczowe...
 
 % Część angielska
 \noindent \textbf{Thesis title:} \\
-Addressable LED Lighting Control System Using ESP32 Microcontroller and Mobile Application.
+Design and Implementation of a Decorative ARGB LED Lighting System Using an ESP32 Microcontroller with a Dedicated Mobile Application
 
 \vspace{0.5cm}
 
 \noindent \textbf{Abstract:} \\
-Provide abstract...
+This project presents a comprehensive control system for ARGB LED Christmas light chains (WS2812D), consisting of an ESP32-S3 Plus microcontroller with dedicated firmware, a mobile application for Android/iOS devices developed using the cross-platform Flutter framework, and an enclosure designed and manufactured using 3D printing technology. The system offers over 40 fully configurable lighting effects, two connection modes (direct Access Point or home WiFi network configured via BLE), and an intuitive user interface with Polish and English language support.
 
 \vspace{0.5cm}
 
 \noindent \textbf{Keywords:} \\
-Provide keywords...
+ESP32 Microcontroller, Addressable LED, RGB, Decorative Lighting, Mobile Application, Dart, Flutter, Android, iOS, Firmware, C++, Arduino, Bluetooth Low Energy, WiFi, Wireless Control, REST API, mDNS, Internet of Things, Smart Home, FreeRTOS, 3D Printing
 
 \cleardoublepage
 
 % --- SPIS TREŚCI ---
+% Numeracja dużymi cyframi rzymskimi
+\pagenumbering{Roman}
 \tableofcontents
+\cleardoublepage
+
+% --- SPIS RYSUNKÓW ---
+\listoffigures
+\cleardoublepage
+
+% --- SPIS TABEL ---
+\listoftables
+\cleardoublepage
+
+% --- SPIS LISTINGÓW ---
+\lstlistoflistings
 \cleardoublepage
 
 % --- TREŚĆ ---
@@ -137,7 +199,2712 @@ Provide keywords...
 \pagenumbering{arabic}
 \pagestyle{plain} 
 
-\chapter{}
+% ============================================================================
+% ROZDZIAŁ 1: WSTĘP
+% ============================================================================
+\chapter{Wstęp}
 
+\section{Motywacja}
+
+Rynek oświetlenia dekoracyjnego, w szczególności lampek choinkowych, od lat zdominowany jest przez produkty wykorzystujące tradycyjne diody LED. Lampki te oferują ograniczone możliwości personalizacji -- najczęściej sprowadzające się do wyboru jednego z kilku predefiniowanych trybów migania. W przeciwieństwie do nich, technologia adresowalnych diod LED (ARGB) pozwala na indywidualne sterowanie każdą diodą z osobna, otwierając możliwości tworzenia zaawansowanych animacji, gradientów oraz efektów świetlnych niemożliwych do osiągnięcia przy użyciu tradycyjnych rozwiązań.
+
+Jedynym znaczącym producentem oferującym oświetlenie choinkowe wykorzystujące adresowalne diody LED jest firma Twinkly. Produkty tej firmy charakteryzują się: wysoką jakością wykonania, rozbudowaną aplikacją mobilną z funkcjami mapowania 2D i 3D, efektami świetlnymi reagującymi na muzykę oraz integracją z asystentami inteligentnych domów, takimi jak Google Home czy Amazon Alexa. Jednakże wysoka cena produktów Twinkly (kilkukrotnie przewyższająca koszt tradycyjnych lampek choinkowych) sprawia, że rozwiązania te pozostają niedostępne dla znacznej części konsumentów.
+
+Niniejszy projekt powstał z myślą o wypełnieniu tej luki. Celem było stworzenie systemu sterowania oświetleniem choinkowym ARGB, który oferuje podstawowe funkcjonalności zbliżone do rozwiązań komercyjnych, pozostając jednocześnie znacząco tańszym i bardziej dostępnym dla przeciętnego użytkownika. Wykorzystanie popularnego mikrokontrolera ESP32, ogólnodostępnych komponentów elektronicznych oraz otwartego oprogramowania pozwala na znaczną redukcję kosztów produkcji przy zachowaniu atrakcyjnej funkcjonalności końcowego produktu.
+
+Dodatkową motywacją podjęcia tego tematu była chęć zgłębienia zagadnień związanych z programowaniem systemów wbudowanych, komunikacją bezprzewodową (WiFi, Bluetooth Low Energy), tworzeniem aplikacji mobilnych oraz projektowaniem elementów do druku 3D.
+
+
+\section{Wprowadzenie do tematu} Adresowalne diody LED stanowią rozwinięcie tradycyjnych technologii oświetleniowych, wzbogacając je o możliwość indywidualnego sterowania kolorem i jasnością każdej diody w łańcuchu. W przeciwieństwie do klasycznych taśm LED RGB, w których cały układ świeci tą samą barwą, diody takie jak WS2812 czy WS2815 wykorzystują zintegrowany sterownik w każdej diodzie i komunikują się za pomocą jednoprzewodowego protokołu szeregowego.
+
+Rozwój tanich mikrokontrolerów cechujących się wbudowaną łącznością bezprzewodową, wysoką efektywnością energetyczną i znaczną mocą obliczeniową, takich jak platformy Arduino czy układy z rodzin STM32 i ESP - otworzył nowe możliwości dla projektów z zakresu Internetu Rzeczy (IoT), zarówno w przemyśle, jak i w zastosowaniach hobbystycznych. Układy te oferują wydajne procesory, moduły Wi-Fi i Bluetooth oraz bogaty zestaw interfejsów, a wszystko to w przystępnej cenie i kompaktowej formie.
+
+Niniejszy projekt integruje obie technologie: adresowalne diody LED sterowane przez mikrokontroler ESP32-S3 oraz aplikację mobilną stworzoną w wieloplatformowym frameworku Flutter. Pozwala to na obsługę systemu zarówno na urządzeniach z systemami Android, jak i iOS, przy wykorzystaniu jednej bazy kodu.
+
+\section{Cel i zakres pracy}
+Głównym celem pracy było zaprojektowanie i wykonanie systemu sterowania łańcuchem adresowalnych diod LED, znajdującego zastosowanie w nowoczesnych ozdobach świątecznych. System otrzymał roboczą nazwę \textbf{PixelTree}, nawiązującą do adresowalnych pikseli LED oraz docelowego zastosowania w oświetleniu choinkowym.
+
+\vspace{0.5cm}
+
+Zakres pracy obejmował:
+\begin{itemize}
+    \item opracowanie oprogramowania układowego (firmware) dla mikrokontrolera ESP32-S3, realizującego animacje świetlne oraz obsługę komunikacji bezprzewodowej,
+    \item stworzenie aplikacji mobilnej w technologii Flutter, umożliwiającej sterowanie urządzeniem z poziomu smartfona,
+    \item zaprojektowanie i wykonanie obudowy w technologii druku 3D,
+    \item integrację wszystkich komponentów w działający prototyp.
+\end{itemize}
+
+Poza zakresem pracy pozostały: integracja z zewnętrznymi systemami IoT oraz zaawansowane funkcje takie jak mapowanie przestrzenne czy synchronizacja z muzyką.
+
+
+\section{Struktura pracy}
+Praca podzielona jest na osiem rozdziałów. Rozdział drugi stanowi przegląd technologii wykorzystanych w projekcie. Rozdział trzeci prezentuje analizę wymagań systemowych. Rozdziały czwarty, piąty i szósty stanowią rdzeń pracy – opisują kolejno warstwę sprzętową, oprogramowanie układowe mikrokontrolera oraz aplikację mobilną. Rozdział siódmy przedstawia przeprowadzone testy, a ostatni rozdział zawiera wnioski i podsumowanie.
+
+% ============================================================================
+% ROZDZIAŁ 2: PRZEGLĄD LITERATURY I TECHNOLOGII
+% ============================================================================
+\chapter{Przegląd literatury i technologii}
+
+Rozdział ten zawiera przegląd technologii wykorzystanych w projekcie. Omówiono zasadę działania adresowalnych diod LED, architekturę mikrokontrolera ESP32-S3, protokoły komunikacji bezprzewodowej oraz zastosowane narzędzia programistyczne.
+
+\section{Adresowalne diody LED}
+
+Adresowalne diody LED serii WS28xx to zaawansowane źródła światła integrujące układy sterujące oraz diody RGB LED w jednej obudowie. Każdy piksel zawiera układ logiczny, wewnętrzny oscylator, 24-bitowy rejestr koloru (po 8 bitów na kanał RGB, co daje 256 poziomów jasności), sterownik prądowy oraz trzy diody LED. W projekcie wykorzystano model WS2812D, będący wariantem podstawowego WS2812B o zoptymalizowanej konstrukcji \cite{ws2812b} \cite{ws2812d} \cite{ws2815}.
+
+\subsection{Protokół komunikacji}
+
+Komunikacja odbywa się za pomocą jednoprzewodowego protokołu szeregowego NZR (Non-Return-to-Zero) z modulacją szerokości impulsu. Dane transmitowane są z prędkością 800~kbps, gdzie każdy bit kodowany jest kombinacją stanów wysokiego (T\textsubscript{H}) i niskiego (T\textsubscript{L}) o ściśle określonym czasie trwania. Format danych to GRB (Green-Red-Blue) z najbardziej znaczącym bitem wysyłanym jako pierwszy \cite{ws2812d}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+        % Bit "0" - T0H=0.4µs, T0L=0.85µs
+        \draw[thick] (0,0) -- (0,1);
+        \draw[thick] (0,1) -- (0.4,1);
+        \draw[thick] (0.4,1) -- (0.4,0);
+        \draw[thick] (0.4,0) -- (1.25,0);
+        
+        \draw[<->, >=stealth] (0,1.4) -- (0.4,1.4);
+        \node[font=\footnotesize, above] at (0.2, 1.4) {T0H};
+        \draw[<->, >=stealth] (0.4,-0.4) -- (1.25,-0.4);
+        \node[font=\footnotesize, below] at (0.825, -0.4) {T0L};
+        \node[font=\small, anchor=north] at (0.625, -0.8) {Bit ,,0''};
+
+        \node at (1.75, 0.5) {\ldots};
+        
+        % Bit "1" - T1H=0.8µs, T1L=0.45µs
+        \draw[thick] (2.25,0) -- (2.25,1);
+        \draw[thick] (2.25,1) -- (3.05,1);
+        \draw[thick] (3.05,1) -- (3.05,0);
+        \draw[thick] (3.05,0) -- (3.5,0);
+        
+        \draw[<->, >=stealth] (2.25,1.4) -- (3.05,1.4);
+        \node[font=\footnotesize, above] at (2.65, 1.4) {T1H};
+        \draw[<->, >=stealth] (3.05,-0.4) -- (3.5,-0.4);
+        \node[font=\footnotesize, below] at (3.275, -0.4) {T1L};
+        \node[font=\small, anchor=north] at (2.875, -0.8) {Bit ,,1''};
+        
+        \node at (4, 0.5) {\ldots};
+        
+        \draw[thick] (4.5,0) -- (6.5,0);
+        \draw[<->, >=stealth] (4.5,-0.4) -- (6.5,-0.4);
+        \node[font=\footnotesize, below] at (5.5, -0.4) {$\geq$280 $\mu$s};
+        \node[font=\small, anchor=north] at (5.5, -0.8) {Reset};
+        
+        % Legenda
+        \node[font=\footnotesize, align=left, anchor=west] at (7, 1) {T0H = 0,22--0,38 $\mu$s};
+        \node[font=\footnotesize, align=left, anchor=west] at (7, 0.5) {T0L = 0,58--1,0 $\mu$s};
+        \node[font=\footnotesize, align=left, anchor=west] at (7, 0) {T1H = 0,58--1,0 $\mu$s};
+        \node[font=\footnotesize, align=left, anchor=west] at (7, -0.5) {T1L = 0,58--1,0 $\mu$s};
+    \end{tikzpicture}
+    \caption{Kodowanie bitów w protokole WS2812D -- diagram czasowy \cite{ws2812d}}
+    \label{fig:ws2812-timing}
+\end{figure}
+
+Mechanizm kaskadowego połączenia (daisy-chain) umożliwia sterowanie długimi łańcuchami diod przy użyciu pojedynczego pinu GPIO. Po włączeniu zasilania pierwszy piksel pobiera początkowe 24 bity do wewnętrznego zatrzasku, a pozostałe dane przekazuje przez pin DOUT do kolejnego piksela. \cite{ws2812d} Projekt PixelTree składa się ze 100 diod ARGB LED WS2812D, co przy częstotliwości odświeżania 60~Hz daje płynne i efektowne animacje świetlne.
+
+\subsection{Warianty 5V i 12V}
+
+Na rynku dostępne są dwa główne warianty adresowalnych diod LED różniące się napięciem zasilania WS2812 i WS2815. Tabela~\ref{tab:ws2812-vs-ws2815} przedstawia porównanie parametrów najpopularniejszych modeli.
+
+\begin{table}[H]
+\centering
+\caption{Porównanie diod WS2812 (5V) \cite{ws2812b} \cite{ws2812d} i WS2815 (12V) \cite{ws2815}}
+\label{tab:ws2812-vs-ws2815}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Parametr} & \textbf{WS2812B/D} & \textbf{WS2815} \\
+\hline
+Napięcie zasilania & 3,5--5,3 V & 9,5--13,5 V \\
+\hline
+Prąd maksymalny (piksel) & 50--60 mA & $\sim$18 mA \\
+\hline
+Liczba przewodów & 3 (VCC, GND, DIN) & 4 (VCC, GND, DIN, BIN) \\
+\hline
+Zapasowa linia danych & Brak & Tak (BIN) \\
+\hline
+Częstotliwość PWM & $\sim$400 Hz & $\sim$2 kHz \\
+\hline
+\end{tabular}
+\end{table}
+
+Model WS2815 oferuje kilka istotnych przewag technicznych \cite{ws2815}. Obecność pinu BIN (Backup Input) zapewnia odporność na uszkodzenie pojedynczego piksela -- sygnał automatycznie przełącza się na linię zapasową, zachowując ciągłość transmisji w całym łańcuchu. Wyższa częstotliwość PWM (2~kHz vs 400~Hz) eliminuje migotanie występujące np. przy nagrywaniu kamerą. Niższy prąd (około 18~mA przy 12V vs 60~mA przy 5V) redukuje spadki napięcia w długich łańcuchach.
+
+Pomimo tych zalet, w tym projekcie zdecydowano się na model WS2812D \cite{ws2812d}. Głównym powodem była dostępność rynkowa. Diody WS2815 praktycznie nie występują w obudowach typu ,,koralik'', wymaganych do konstrukcji łańcucha lampek choinkowych. Dodatkową zaletą WS2812D jest mniejsza liczba przewodów (3 zamiast 4), co upraszcza montaż i obniża koszty produkcji. Zjawisko spadku napięcia, choć występuje, nie stanowi istotnego problemu przy obecnej liczbie 100 diod. W przypadku dłuższych łańcuchów konieczne byłoby zastosowanie mechanizmu wstrzykiwania napięcia (ang. power injection) co około 100 diod.
+
+
+\section{Mikrokontroler ESP32-S3}
+\label{sec:esp32s3}
+
+ESP32-S3 to flagowy układ SoC (System on Chip) firmy Espressif, zaprojektowany z myślą o zastosowaniach IoT. Wyposażony jest w dwurdzeniowy procesor Xtensa LX7 o częstotliwości do 240~MHz oraz zintegrowane moduły łączności bezprzewodowej \cite{esp32s3}.
+
+\subsection{Architektura i specyfikacja}
+
+Układ oferuje 512~KB wbudowanej pamięci SRAM oraz możliwość rozszerzenia o zewnętrzną pamięć Flash (do 16~MB) i PSRAM (do 8~MB). Bogaty zestaw peryferiów obejmuje 45 programowalnych pinów GPIO, przetworniki ADC, kanały PWM, interfejsy SPI, I2C, UART oraz dedykowany moduł RMT (Remote Control Transceiver) szczególnie przydatny przy sterowaniu diodami LED. \cite{esp32s3}
+
+\begin{table}[H]
+\centering
+\caption{Specyfikacja ESP32-S3 \cite{esp32s3}}
+\label{tab:esp32s3-spec}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Procesor & Xtensa LX7, dual-core, do 240 MHz \\
+\hline
+Pamięć SRAM & 512 KB \\
+\hline
+WiFi & 802.11 b/g/n, 2,4 GHz, do 150 Mbps \\
+\hline
+Bluetooth & BLE 5.0 (LE 1M/2M/Coded PHY) \\
+\hline
+GPIO & 45 pinów programowalnych \\
+\hline
+Interfejsy & 4× SPI, 2× I2C, 3× UART, USB OTG \\
+\hline
+Pobór prądu (tryb uśpienia) & $\sim$8 $\mu$A \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Arduino i FreeRTOS}
+\label{subsec:arduino-freertos}
+
+W projekcie wykorzystano framework Arduino dla ESP32, który stanowi warstwę abstrakcji nad natywnym ESP-IDF (Espressif IoT Development Framework) \cite{arduino-esp32}. Arduino upraszcza proces programowania, oferując znajome funkcje takie jak \texttt{setup()}, \texttt{loop()} oraz bogaty ekosystem bibliotek. Jednocześnie framework zachowuje dostęp do systemu operacyjnego FreeRTOS, umożliwiając tworzenie zadań wykonywanych równolegle na dwóch rdzeniach procesora.
+
+Architektura dwurdzeniowa ESP32-S3 pozwala na separację krytycznych czasowo operacji. W typowej konfiguracji rdzeń PRO\_CPU (Core 0) obsługuje stos protokołów WiFi i Bluetooth, podczas gdy rdzeń APP\_CPU (Core 1) dedykowany jest dla logiki aplikacji. Mechanizmy synchronizacji FreeRTOS takie jak: semafory, mutexy i kolejki -- zapewniają bezpieczną komunikację między zadaniami \cite{arduino-esp32}.
+
+\subsection{Porównanie z alternatywnymi platformami}
+
+\begin{table}[H]
+\centering
+\caption{Porównanie platform mikrokontrolerów \cite{esp32s3} \cite{esp8266} \cite{arduino-uno} \cite{rpi-pico}}
+\label{tab:mcu-comparison}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Parametr} & \textbf{ESP32-S3} & \textbf{ESP8266} & \textbf{Arduino Uno} & \textbf{RPi Pico W} \\
+\hline
+Częstotliwość CPU & 240 MHz & 80--160 MHz & 16 MHz & 133 MHz \\
+\hline
+RAM & 512 KB & 80 KB & 2 KB & 264 KB \\
+\hline
+WiFi/BT & Tak/Tak & Tak/Nie & Nie/Nie & Tak/Nie \\
+\hline
+Rdzenie & 2 & 1 & 1 & 2 \\
+\hline
+Cena modułu & $\sim$\$5 & $\sim$\$3 & $\sim$\$4 & $\sim$\$6 \\
+\hline
+\end{tabular}
+\end{table}
+
+ESP32-S3 wyróżnia się kompletnym rozwiązaniem integrującym WiFi, Bluetooth i wydajny procesor w jednym układzie, co czyni go optymalnym wyborem dla urządzeń IoT wymagających łączności bezprzewodowej.
+
+\section{Protokoły komunikacyjne}
+
+System wykorzystuje dwa protokoły bezprzewodowe: Bluetooth Low Energy do wstępnej konfiguracji urządzenia oraz WiFi do właściwej komunikacji z aplikacją mobilną.
+
+\subsection{Bluetooth Low Energy}
+
+Bluetooth Low Energy to energooszczędny standard komunikacji bezprzewodowej zoptymalizowany pod kątem urządzeń IoT. W przeciwieństwie do klasycznego Bluetooth, BLE wykorzystuje krótkie pakiety danych i długie okresy uśpienia, co znacząco redukuje zużycie energii \cite{ble-spec}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        box/.style={rectangle, draw, minimum width=3cm, minimum height=0.8cm, align=center, font=\footnotesize},
+        arrow/.style={->, >=stealth}
+    ]
+        % Serwer GATT
+        \node[box, fill=blue!20] (server) at (0,4) {Serwer GATT\\(ESP32)};
+        
+        % Usługi
+        \node[box, fill=green!25] (service1) at (-5,2.5) {Wymiana kluczy\\ECDH};
+        \node[box, fill=orange!25] (service2) at (0,2.5) {Skanowanie\\sieci WiFi};
+        \node[box, fill=red!25] (service3) at (5,2.5) {Poświadczenia\\WiFi};
+        
+        % Charakterystyki
+        \node[box, fill=green!10] (char1) at (-6.8,-0.3) {Klucz publiczny\\ESP32};
+        \node[box, fill=green!10] (char1b) at (-3.2,-0.3) {Klucz publiczny\\aplikacji};
+        \node[box, fill=orange!10] (char2) at (-1.6,0.8) {Wyzwalacz\\skanowania};
+        \node[box, fill=orange!10] (char2b) at (1.6,0.8) {Lista\\sieci};
+        \node[box, fill=red!10] (char3) at (3.2,-0.3) {SSID\\sieci};
+        \node[box, fill=red!10] (char3b) at (6.8,-0.3) {Hasło\\(szyfrowane AES)};
+        
+        % Połączenia
+        \draw[arrow] (server) -- (service1);
+        \draw[arrow] (server) -- (service2);
+        \draw[arrow] (server) -- (service3);
+        \draw[arrow] (service1) -- (char1);
+        \draw[arrow] (service1) -- (char1b);
+        \draw[arrow] (service2) -- (char2);
+        \draw[arrow] (service2) -- (char2b);
+        \draw[arrow] (service3) -- (char3);
+        \draw[arrow] (service3) -- (char3b);
+    \end{tikzpicture}
+    \caption{Struktura usług BLE GATT w systemie PixelTree}
+    \label{fig:gatt-structure}
+\end{figure}
+
+Architektura GATT (Generic Attribute Profile) definiuje hierarchiczną strukturę danych: profil zawiera usługi (Services), które grupują charakterystyki (Characteristics) reprezentujące pojedyncze punkty danych. Każdy element identyfikowany jest unikalnym UUID -- standardowym 16-bitowym dla usług zdefiniowanych przez Bluetooth SIG lub własnym 128-bitowym dla aplikacji niestandardowych \cite{ble-spec}.
+
+Bezpieczeństwo BLE opiera się na mechanizmie parowania (pairing), który może wykorzystywać różne metody uwierzytelniania: Just Works (bez potwierdzenia), Passkey Entry (kod PIN) lub Numeric Comparison (porównanie liczb). Po sparowaniu generowany jest klucz długoterminowy (LTK) używany do szyfrowania komunikacji algorytmem AES-CCM-128 \cite{ble-spec}.
+
+\subsection{WiFi i protokół HTTP}
+
+ESP32-S3 obsługuje standard WiFi 802.11 b/g/n w paśmie 2,4~GHz, oferując praktyczną przepustowość 7--12~Mbps dla połączeń TCP. Układ może pracować w trzech trybach: Station (STA) -- łączenie z istniejącą siecią, Access Point (AP) -- tworzenie własnej sieci oraz jednoczesnym STA+AP, który może być wykorzystywany podczas procesu konfiguracji \cite{esp32s3}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        device/.style={rectangle, draw, rounded corners, minimum width=2cm, minimum height=1.2cm, align=center},
+        arrow/.style={<->, >=stealth, thick}
+    ]
+        % Urządzenia
+        \node[device, fill=green!20] (phone) at (0,0) {Aplikacja\\mobilna};
+        \node[device, fill=orange!20] (router) at (4,0) {Router\\WiFi};
+        \node[device, fill=blue!20] (esp) at (8,0) {ESP32\\(STA)};
+        
+        % Połączenia
+        \draw[arrow] (phone) -- node[above, font=\small] {WiFi} (router);
+        \draw[arrow] (router) -- node[above, font=\small] {WiFi} (esp);
+        
+        % Etykieta trybu
+        \node[font=\small\itshape] at (4, -1.2) {Tryb Station};
+        
+        % Tryb AP
+        \node[device, fill=green!20] (phone2) at (2,-3) {Aplikacja\\mobilna};
+        \node[device, fill=blue!20] (esp2) at (6,-3) {ESP32\\(AP)};
+        
+        \draw[arrow] (phone2) -- node[above, font=\small] {WiFi Direct} (esp2);
+        \node[font=\small\itshape] at (4, -4.2) {Tryb Access Point};
+    \end{tikzpicture}
+    \caption{Tryby pracy WiFi w systemie}
+    \label{fig:wifi-modes}
+\end{figure}
+
+Komunikacja z aplikacją mobilną realizowana jest poprzez REST API oparte na protokole HTTP. Serwer WWW uruchomiony na ESP32 udostępnia endpointy do odczytu stanu urządzenia (GET), sterowania efektami (POST) oraz aktualizacji ustawień (PUT). Format wymiany danych to JSON, przetwarzany po stronie firmware za pomocą biblioteki ArduinoJson.
+
+Odkrywanie urządzenia w sieci lokalnej umożliwia protokół mDNS (Multicast DNS), dzięki któremu ESP32 rozgłasza swoją nazwę domenową (np. \texttt{pixeltree.local}) bez konieczności konfiguracji serwera DNS. Aplikacja mobilna może następnie połączyć się z urządzeniem bez znajomości jego adresu IP \cite{mdns-rfc}.
+
+\section{Biblioteka FastLED}
+
+FastLED to jedna z najpopularniejszych bibliotek Arduino do sterowania adresowalnymi diodami LED, rozwijana jako projekt open-source na licencji MIT. Obsługuje ponad 30 typów adresowalnych diod LED, w tym WS2812B, WS2815, SK6812 oraz układy SPI jak APA102 \cite{fastled}.
+
+\subsection{Kluczowe funkcjonalności}
+
+Biblioteka oferuje zaawansowany system zarządzania kolorami z natywną obsługą przestrzeni HSV (Hue-Saturation-Value), co znacząco upraszcza implementację efektów świetlnych. Wbudowane palety kolorów (16 lub 256 pozycji) oraz funkcje interpolacji gradientów pozwalają na tworzenie płynnych przejść  \cite{fastled}.
+
+Zoptymalizowana 8-bitowa matematyka (moduł lib8tion) zapewniaja wydajne obliczenia na mikrokontrolerach. Funkcje takie jak \texttt{sin8()}, \texttt{cos8()} czy \texttt{scale8()} działają nawet 20-krotnie szybciej niż standardowe odpowiedniki zmiennoprzecinkowe \cite{fastled}.
+
+\begin{table}[H]
+\centering
+\caption{Porównanie bibliotek do sterowania LED \cite{fastled} \cite{neopixel}}
+\label{tab:led-libs}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Funkcja} & \textbf{FastLED} & \textbf{Adafruit NeoPixel} \\
+\hline
+Obsługa HSV & Pełna & Brak \\
+\hline
+Palety kolorów & Tak & Brak \\
+\hline
+Wygładzanie jasności & Automatyczne & Brak \\
+\hline
+Zarządzanie mocą & Wbudowane & Brak \\
+\hline
+Obsługa RGBW & Ograniczona & Pełna \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Optymalizacje dla ESP32}
+
+Na platformie ESP32 biblioteka FastLED wykorzystuje sprzętowy kontroler RMT (Remote Control Transceiver) do generowania precyzyjnych sygnałów czasowych wymaganych przez protokół WS28XX \cite{arduino-esp32} \cite{fastled}. Alternatywnie dostępny jest sterownik I2S, który oferuje lepszą stabilność przy jednoczesnym wykorzystaniu stosu WiFi.
+
+\section{Framework Flutter}
+
+Flutter to wieloplatformowy framework, opracowany przez firme Google. Wykorzystywany do szybkiego tworzenia aplikacji wieloplatformowych z jednej bazy kodu napisanej w języku Dart. Umożliwia kompilację natywnych aplikacji na systemy Android, iOS, a także platformy desktopowe i webowe \cite{flutter}.
+
+\subsection{Architektura frameworka}
+
+Flutter wykorzystuje własny silnik renderowania zamiast natywnych komponentów UI platformy docelowej. Architektura warstwowa obejmuje: warstwę aplikacji (widgety użytkownika), framework (gotowe komponenty interfejsu, obsługa gestów i animacji), silnik C++ (renderowanie grafiki) oraz warstwę integracji z systemem operacyjnym \cite{flutter}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        layer/.style={rectangle, draw, minimum width=12cm, minimum height=1cm, align=center},
+    ]
+        \node[layer, fill=purple!20] (app) at (0,3) {Warstwa aplikacji -- widgety, logika biznesowa};
+        \node[layer, fill=blue!20] (framework) at (0,2) {Framework -- gotowe komponenty, animacje, gesty};
+        \node[layer, fill=green!20] (engine) at (0,1) {Silnik (C++) -- renderowanie interfejsu};
+        \node[layer, fill=orange!20] (embedder) at (0,0) {Warstwa platformy -- Android, iOS, Web, Windows, Linux};
+    \end{tikzpicture}
+    \caption{Architektura warstwowa Flutter}
+    \label{fig:flutter-arch}
+\end{figure}
+
+Jedną z zalet Flutter-a jest mechanizm Hot Reload, który pozwala na bardzo szybkie odświeżenie interfejsu po zmianach w kodzie bez utraty stanu aplikacji. Znacząco przyspiesza to proces rozwoju i testowania oprogramowania.
+
+\subsection{Porównanie z rozwiązaniami natywnymi}
+
+Flutter zyskał dużą popularność w środowiskach startupowych i przy tworzeniu prototypów ze względu na szybkość rozwoju oprogramowania. Główną zaletą jest możliwość utrzymywania jednej bazy kodu dla systemów Android i iOS, co obniża koszty produkcji i utrzymania w porównaniu z rozwijaniem aplikacji natywnych.
+
+Technologia ta wiąże się jednak z pewnymi kompromisami. Aplikacje Flutter są zazwyczaj większe od ich natywnych odpowiedników, ponieważ muszą zawierać własny silnik renderowania. Dostęp do najnowszych funkcji systemowych (np. nowe API w dniu premiery nowej wersji iOS) może być opóźniony do czasu aktualizacji odpowiednich wtyczek lub wymagać samodzielnego pisania kodu natywnego.
+
+Istotnym wyzwaniem jest również adaptacja interfejsu do platform desktopowych i webowych. Choć Flutter umożliwia kompilację na te platformy, aplikacja projektowana pod urządzenia mobilne bez dodatkowej pracy nad UX/UI wygląda na dużych ekranach -- jak uruchomiona na emulatorze, rozciągnięta aplikacja mobilna. Profesjonalne wdrożenia wymagają projektowania osobnych widoków lub zaawansowanej logiki dostosowującej układ elementów (ang. adaptive layout).
+\section{Istniejące rozwiązania}
+
+Na rynku dostępnych jest kilka rozwiązań do sterowania adresowalnym oświetleniem LED, zarówno open-source, jak i komercyjnych.
+
+\subsection{WLED}
+
+WLED to najpopularniejszy otwartoźródłowy firmware dla kontrolerów LED opartych na ESP8266 i ESP32. Oferuje ponad 100 efektów świetlnych oraz integrację z systemami automatyki domowej. Projekt posiada natywną aplikację mobilną ,,WLED Native'' (Android/iOS) oraz rozbudowany interfejs webowy, który stanowi główne centrum sterowania \cite{wled}.
+
+\subsection{Twinkly}
+
+Twinkly to komercyjny ekosystem oświetlenia dekoracyjnego, znany z zaawansowanej technologii mapowania przestrzennego. Wykorzystując algorytmy wizji komputerowej (Computer Vision), aplikacja mobilna skanuje pozycję diod za pomocą kamery telefonu, tworząc wirtualną mapę 2D lub 3D. Pozwala to na precyzyjne renderowanie animacji niezależnie od fizycznego ułożenia lampek. Jest to rozwiązanie zamknięte, bez publicznie dostępnego API \cite{twinkly}.
+
+\subsection{Philips Hue}
+
+Philips Hue to system inteligentnego oświetlenia oparty na bezprzewodowym protokole Zigbee. Centralnym elementem sieci jest mostek (Hue Bridge), który zarządza komunikacją z żarówkami i akcesoriami, tworząc stabilną sieć mesh niezależną od domowego WiFi. Choć system ten koncentruje się głównie na oświetleniu użytkowym, w ofercie znajdują się również produkty dekoracyjne (seria Festavia). Wyróżnia się wysoką niezawodnością i szeroką integracją z zewnętrznymi ekosystemami, lecz wymaga dedykowanego sprzętu \cite{philips-hue}.
+
+\subsection{Porównanie rozwiązań}
+
+\begin{table}[H]
+\centering
+\caption{Porównanie systemów sterowania oświetleniem LED \cite{wled} \cite{twinkly} \cite{philips-hue}}
+\label{tab:solutions-comparison}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Parametr} & \textbf{WLED} & \textbf{Twinkly} & \textbf{Philips Hue} \\
+\hline
+Typ rozwiązania & Open-source & Komercyjny & Komercyjny \\
+\hline
+Liczba efektów & 100+ & 100+ & $\sim$30 \\
+\hline
+Mapowanie 2D/3D & Ograniczone & Pełne (CV) & Brak \\
+\hline
+Komunikacja & WiFi & WiFi, BLE & Zigbee \\
+\hline
+Aplikacja mobilna & Tak (Android/iOS) & Tak (Android/iOS) & Tak (Android/iOS) \\
+\hline
+Interfejs webowy & Tak & Brak & Brak \\
+\hline
+Integracja IoT & Home Assistant, MQTT & Google Home, Alexa & Google Home, Alexa \\
+\hline
+Dodatkowy sprzęt & Dowolny ESP8266/ESP32 & Dedykowany kontroler & Hue Bridge + żarówki \\
+\hline
+Koszt wejścia & Niski & Wysoki & Bardzo wysoki \\
+\hline
+\end{tabular}
+\end{table}
+
+WLED wyróżnia się jako najbardziej elastyczne rozwiązanie open-source, oferujące szerokie możliwości konfiguracji i integracji z zewnętrznymi systemami automatyki domowej. Projekt dostarcza zarówno aplikację mobilną (WLED Native), jak i rozbudowany interfejs webowy. Wymaga jednak pewnej wiedzy technicznej przy wstępnej konfiguracji, a głównym centrum sterowania pozostaje interfejs przeglądarkowy.
+
+Twinkly reprezentuje najbardziej zaawansowane rozwiązanie komercyjne w segmencie oświetlenia dekoracyjnego. Unikalna funkcja mapowania przestrzennego pozwala na precyzyjne sterowanie animacjami niezależnie od fizycznego ułożenia lampek. Wysoka cena produktów stanowi jednak istotną barierę wejścia dla przeciętnego konsumenta.
+
+Philips Hue, mimo że koncentruje się głównie na oświetleniu użytkowym, oferuje najwyższą niezawodność i stabilność działania dzięki protokołowi Zigbee i dedykowanemu sprzętowi. Seria Festavia wprowadza elementy dekoracyjne, jednak dla pełnej funkcjonalności system wymaga zakupu kosztownego mostka Hue Bridge.
+
+Projekt PixelTree pozycjonuje się jako rozwiązanie pośrednie -- łączy prostotę obsługi aplikacji mobilnej z elastycznością i niskim kosztem rozwiązań DIY. Dedykowana aplikacja Flutter eliminuje konieczność korzystania z interfejsu webowego, oferując natywne doświadczenie na urządzeniach mobilnych. Jednocześnie wykorzystanie popularnego mikrokontrolera ESP32 i otwartego protokołu HTTP/REST umożliwia przyszłe rozszerzenia i integracje.
+
+
+
+% ============================================================================
+% ROZDZIAŁ 3: ANALIZA WYMAGAŃ
+% ============================================================================
+\chapter{Analiza wymagań}
+
+Przed rozpoczęciem implementacji konieczne było określenie, co dokładnie system ma realizować i jakie parametry powinien spełniać. Wymagania funkcjonalne definiują zakres możliwości systemu, natomiast wymagania niefunkcjonalne dotyczą aspektów takich jak wydajność, bezpieczeństwo czy wygoda użytkowania. Przypadki użycia, przedstawiają typowe scenariusze obsługi urządzenia.
+
+\section{Wymagania funkcjonalne}
+\subsection{Sterowanie oświetleniem}
+\begin{itemize}
+    \item Wybór efektu świetlnego spośród kilkudziesięciu dostępnych animacji
+    \item Regulacja globalnej jasności oświetlenia w zakresie 0--100\%
+    \item Zmiana parametrów efektu takich jak: kolor, prędkość, intensywność itp.
+    \item Włączanie i wyłączanie oświetlenia z zachowaniem ostatnich ustawień
+\end{itemize}
+\subsection{Łączność bezprzewodowa}
+\begin{itemize}
+    \item Praca w trybie Access Point -- bezpośrednie połączenie telefonu z urządzeniem
+    \item Praca w trybie Station -- połączenie przez domową sieć WiFi
+    \item Konfiguracja sieci WiFi za pośrednictwem Bluetooth Low Energy
+    \item Szyfrowanie poświadczeń WiFi podczas transmisji Bluetooth Low Energy
+    \item Skanowanie dostępnych sieci WiFi z poziomu aplikacji
+    \item Automatyczne wykrywanie urządzenia w sieci lokalnej dzięki mDNS
+\end{itemize}
+\subsection{Trwałość ustawień}
+\begin{itemize}
+    \item Zapisywanie wybranego efektu i jego parametrów w pamięci nieulotnej
+    \item Przywracanie ostatnich ustawień po ponownym uruchomieniu urządzenia
+    \item Przechowywanie poświadczeń sieci WiFi
+\end{itemize}
+\subsection{Aplikacja mobilna}
+\begin{itemize}
+    \item Obsługa systemów Android oraz iOS z jednej bazy kodu
+    \item Interfejs w języku polskim i angielskim
+    \item Zarządzanie wieloma urządzeniami PixelTree
+    \item Ekran wprowadzający dla nowych użytkowników
+\end{itemize}
+
+\section{Wymagania niefunkcjonalne}
+
+\subsection{Wydajność}
+\begin{itemize}
+    \item Płynność animacji na poziomie co najmniej 60 klatek na sekundę
+    \item Czas reakcji na polecenia użytkownika poniżej 200 ms
+    \item Obsługa łańcucha składającego się z co najmniej 100 diod LED, z możliwością łatwej zmiany tej wartości
+\end{itemize}
+
+\subsection{Niezawodność}
+\begin{itemize}
+    \item Stabilne utrzymanie połączenia WiFi przez cały czas pracy
+    \item Obsługa błędów komunikacji zarówno po stronie oprogramowania układowego, jak i aplikacji mobilnej
+    \item Mechanizmy automatycznego ponawiania połączeń
+    \item Wyświetlanie czytelnych komunikatów o błędach dla użytkownika
+    \item Poprawne przywracanie ustawień po zaniku zasilania
+\end{itemize}
+
+\subsection{Bezpieczeństwo}
+\begin{itemize}
+    \item Szyfrowanie poświadczeń WiFi podczas transmisji BLE (ECDH + AES)
+    \item Przechowywania haseł w postaci nie jawnej (zaszyfrowanej)
+\end{itemize}
+
+\subsection{Użyteczność}
+\begin{itemize}
+    \item Intuicyjny interfejs aplikacji mobilnej
+    \item Dokładnie opisany proces konfiguracji niewymagający wiedzy technicznej
+    \item Obsługa trybu jasnego i ciemnego w aplikacji w zależności od ustawień systemowych telefonu
+\end{itemize}
+
+\subsection{Kompatybilność}
+\begin{itemize}
+    \item Wsparcie dla systemu Android 8.0 (API 26) i nowszych
+    \item Wsparcie dla systemu iOS 14 i nowszych
+    \item Współpraca z routerami WiFi 2,4 GHz (802.11 b/g/n)
+\end{itemize}
+
+\subsection{Ograniczenia}
+\begin{itemize}
+    \item Brak obsługi sieci WiFi 5 GHz
+    \item Brak integracji z zewnętrznymi platformami IoT
+    \item Brak obsługi protokołu HTTPS, gdyż komunikacja ograniczona jest jedynie do sieci lokalnej
+\end{itemize}
+
+\section{Przypadki użycia}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.76, transform shape,
+        usecase/.style={ellipse, draw, thick, fill=white, minimum width=3.3cm, minimum height=1.4cm, align=center, font=\footnotesize},
+        actor/.style={circle, fill, minimum size=0.5cm, inner sep=0pt},
+        connection/.style={draw, thick},
+        extend/.style={draw, dashed, -{Latex}, font=\scriptsize},
+        include/.style={draw, dashed, -{Latex}, font=\scriptsize},
+        system/.style={draw, thick, fill=gray!5, rounded corners}
+    ]
+
+        % Użytkownik
+        \node[actor, label={above, yshift=0.3cm}:\textbf{Użytkownik}] (user) at (-10, 0) {};
+        \draw[thick] (user) -- ++(0,-1.5) coordinate (body);
+        \draw[thick] (body) -- ++(-0.8,-1.2);
+        \draw[thick] (body) -- ++(0.8,-1.2);
+        \draw[thick] (user) ++(0,-0.5) coordinate (shoulders);
+        \draw[thick] (shoulders) -- ++(-0.8,-0.5);
+        \draw[thick] (shoulders) -- ++(0.8,-0.5);
+
+        % ESP32
+        \node[draw, rectangle, minimum width=1.4cm, minimum height=3.0cm, fill=black!10, label=above:\textbf{Sterownik ESP32}] (esp) at (10, 0) {API};
+
+        \draw[system] (-7.0, 9.0) rectangle (7.0, -9.0);
+        \node[anchor=north, font=\bfseries\large] at (0, 8.8) {Aplikacja Mobilna PixelTree};
+
+        % --- PRZYPADKI UŻYCIA ---
+
+        % Grupa 1: Konfiguracja
+        \node[usecase] (auth) at (-5.0, 7.5) {Uwierzytelnianie\\BLE};
+        \node[usecase] (scan) at (5.0, 7.5) {Skanowanie\\sieci WiFi};
+        \node[usecase] (config) at (0, 5.0) {Konfiguracja urządzenia\\(Provisioning)};
+
+        % Grupa 2: Zarządzanie
+        \node[usecase] (mdns) at (0, 2.5) {Wykrywanie\\mDNS}; 
+        \node[usecase] (manage) at (0, 0.0) {Zarządzanie\\listą urządzeń};
+
+        % Grupa 3: Połączenie
+        \node[usecase] (connect_ap) at (0, -2.5) {Połączenie\\bezpośrednie (AP)};
+
+        % Grupa 4: Sterowanie
+        \node[usecase] (control) at (0, -5.0) {Sterowanie\\oświetleniem};
+        
+        % Podprzypadki sterowania
+        \node[usecase] (effect) at (-5.0, -7.5) {Zmiana\\efektu};
+        \node[usecase] (params) at (0, -7.5) {Edycja\\parametrów};
+        \node[usecase] (power) at (5.0, -7.5) {Zasilanie\\Włącz/Wyłącz};
+
+        % --- RELACJE ---
+
+        % Użytkownik -> Główne przypadki
+        \draw[connection] (user) -- (config.west);
+        \draw[connection] (user) -- (manage.west);
+        \draw[connection] (user) -- (connect_ap.west);
+        \draw[connection] (user) -- (control.west);
+
+        % ESP32 -> Przypadki
+        \draw[connection] (config.east) -- (esp.130);
+        \draw[connection, dashed] (mdns.east) -- (esp.170);
+        
+        % Connect AP
+        \draw[connection] (connect_ap.east) -- (esp.190);
+        % Control
+        \draw[connection] (control.east) -- (esp.230);
+
+        % Relacje <<zawiera>>
+        \draw[include] (config) -- node[left, above, sloped] {<<zawiera>>} (auth);
+        \draw[include] (config) -- node[right, above, sloped] {<<zawiera>>} (scan);
+        \draw[include] (manage) -- node[right, fill=white, inner sep=1pt] {<<zawiera>>} (mdns);
+
+        % Relacje <<rozszerza>>
+        \draw[extend] (effect) -- node[left, sloped, above] {<<rozszerza>>} (control);
+        \draw[extend] (params) -- node[midway, fill=white, inner sep=1pt] {<<rozszerza>>} (control);
+        \draw[extend] (power) -- node[right, sloped, above] {<<rozszerza>>} (control);
+
+    \end{tikzpicture}
+    \caption{Szczegółowy diagram przypadków użycia systemu PixelTree}
+    \label{fig:usecase-diagram-detailed}
+\end{figure}
+
+\subsection{Konfiguracja urządzenia - tryb Station}
+
+Użytkownik przeprowadza jednorazową konfigurację urządzenia, aby dołączyło do domowej sieci WiFi:
+\begin{itemize}
+    \item Uruchomienie aplikacji i wyszukanie urządzenia przez Bluetooth Low Energy
+    \item Skanowanie dostępnych sieci WiFi
+    \item Wprowadzenie hasła do wybranej sieci (transmisja szyfrowana)
+    \item Weryfikacja poprawności połączenia
+\end{itemize}
+Po zakończeniu konfiguracji urządzenie jest dostępne w sieci dla wszystkich domowników.
+
+\subsection{Połączenie bezpośrednie - tryb AP}
+
+Użytkownik steruje urządzeniem bez dostępu do sieci domowej lub gdy konfiguracja przez BLE nie jest możliwa:
+\begin{itemize}
+    \item Urządzenie tworzy własną sieć WiFi (Access Point)
+    \item Telefon łączy się bezpośrednio z siecią urządzenia
+    \item Sterowanie odbywa się tak samo jak w trybie Station
+\end{itemize}
+Tryb ten jest przydatny podczas pierwszego uruchomienia, w lokalizacjach bez infrastruktury sieciowej lub jako rozwiązanie awaryjne.
+
+\subsection{Dołączenie do urządzenia w sieci}
+
+Inny użytkownik w tej samej sieci domowej chce sterować już skonfigurowanym urządzeniem:
+\begin{itemize}
+    \item Uruchomienie aplikacji mobilnej
+    \item Automatyczne wykrycie urządzenia PixelTree w sieci lokalnej dzięki mDNS
+    \item Dodanie urządzenia do listy bez konieczności ponownej konfiguracji BLE
+\end{itemize}
+
+\subsection{Zarządzanie bazą urządzeń}
+
+Aplikacja mobilna umożliwia obsługę wielu sterowników PixelTree jednocześnie. Użytkownik posiada dostęp do listy zapisanych urządzeń, co pozwala na centralne zarządzanie całym systemem oświetlenia w domu.
+\begin{itemize}
+    \item Przeglądanie listy zapisanych urządzeń wraz z ich statusem (Online/Offline)
+    \item Usuwanie nieużywanych lub niesprawnych urządzeń z pamięci aplikacji
+    \item Dodawanie nowych sterowników poprzez proces konfiguracji BLE lub wykrywanie mDNS
+\end{itemize}
+
+\subsection{Sterowanie oświetleniem}
+
+Użytkownik zarządza efektami świetlnymi:
+\begin{itemize}
+    \item Wybór efektu z listy dostępnych animacji
+    \item Regulacja globalnej jasności
+    \item Zmiana parametrów efektu (kolor, prędkość, intensywność itp.)
+    \item Włączanie i wyłączanie oświetlenia
+\end{itemize}
+
+% ============================================================================
+% ROZDZIAŁ 4: HARDWARE
+% ============================================================================
+\chapter{Warstwa sprzętowa}
+
+\section{Mikrokontroler XIAO ESP32-S3 Plus}
+
+Sercem systemu PixelTree jest moduł XIAO ESP32-S3 Plus firmy Seeed Studio (Rysunek~\ref{fig:xiao-overview}). Jest to miniaturowa płytka rozwojowa oparta na układzie ESP32-S3R8 z dwurdzeniowym procesorem Xtensa LX7 taktowanym zegarem do 240~MHz. Wariant ,,Plus'' rozszerza standardową wersję mikrokontrolera XIAO ESP32-S3 o dodatkowe wyprowadzenia SMD na spodzie płytki oraz zwiększoną do 16~MB pamięć Flash, zachowując przy tym kompaktowe wymiary zaledwie 21×17,8~mm \cite{seeed-xiao}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.52\textwidth]{esp_schemat_główny.jpg}
+    \caption{Budowa modułu XIAO ESP32-S3 Plus \cite{seeed-xiao}}
+    \label{fig:xiao-overview}
+\end{figure}
+
+\subsection{Specyfikacja modułu}
+
+\begin{table}[H]
+\centering
+\caption{Specyfikacja modułu XIAO ESP32-S3 Plus \cite{seeed-xiao}}
+\label{tab:xiao-spec}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Procesor & Xtensa LX7 (do 240 MHz) \\
+\hline
+Wymiary & 21 × 17,8 mm \\
+\hline
+Pamięć Flash & 16 MB \\
+\hline
+Pamięć PSRAM & 8 MB \\
+\hline
+Złącze programowania & USB-C \\
+\hline
+Wyprowadzenia GPIO & 20 pinów (11 krawędziowych + 9 SMD na spodzie) \\
+\hline
+Zasilanie & 5V (USB) lub 3,7V (Li-Po) \\
+\hline
+Napięcie logiki & 3,3V \\
+\hline
+Antena & Zewnętrzna (złącze u.FL) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Układ wyprowadzeń}
+
+Rysunek~\ref{fig:xiao-pinout} przedstawia schemat wyprowadzeń modułu. W projekcie PixelTree wykorzystano następujące piny:
+\begin{itemize}
+    \item \textbf{D7 (GPIO44)} -- linia danych do łańcucha LED (sygnał sterujący WS2812D)
+    \item \textbf{5V, GND} -- zasilanie modułu z przetwornicy DC-DC
+    \item \textbf{USB-C} -- programowanie oraz zasilanie podczas debugowania
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{esp_pinout_schemat.jpg}
+    \caption{Schemat wyprowadzeń modułu XIAO ESP32-S3 \cite{seeed-xiao}}
+    \label{fig:xiao-pinout}
+\end{figure}
+
+\subsection{Uzasadnienie wyboru}
+
+Wybór modułu XIAO ESP32-S3 Plus jako platformy sprzętowej projektu PixelTree podyktowany był następującymi kryteriami:
+
+\begin{itemize}
+    \item \textbf{Kompaktowe wymiary (21×17,8~mm)} -- miniaturowa konstrukcja pozwala na umieszczenie modułu w niewielkiej obudowie sterownika, co jest istotne w kontekście estetyki produktu końcowego.
+    
+    \item \textbf{Natywny interfejs USB-C} -- wbudowany kontroler USB eliminuje konieczność stosowania zewnętrznego konwertera UART, upraszczając zarówno proces programowania, jak i debugowania firmware.
+    
+    \item \textbf{Zewnętrzna antena (złącze u.FL)} -- w przeciwieństwie do wersji z anteną ceramiczną, złącze u.FL umożliwia podłączenie dowolnej kompatybilnej z tym złączem anteny 2,4~GHz, która zapewnia lepszy zasięg WiFi i BLE.
+    
+    \item \textbf{Rozbudowana pamięć (16~MB Flash, 8~MB PSRAM)} -- duża pojemność pamięci umożliwia przechowywanie rozbudowanego firmware z ponad 40 efektami świetlnymi oraz zapewnia wystarczające zasoby dla równoczesnej obsługi stosu WiFi, BLE i buforów animacji.
+    
+    \item \textbf{Przystępna cena (około 7~USD)} -- choć moduł XIAO należy do droższych płytek z rodziny ESP32, jego cena pozostaje akceptowalna w kontekście prototypowania i produkcji jednostkowej. Gotowa płytka z wlutowanymi komponentami, złączem USB-C i anteną eliminuje konieczność projektowania własnego PCB, co znacząco przyspiesza rozwój projektu.
+\end{itemize}
+
+\section{Moduł Pixel Boost}
+
+Mikrokontroler ESP32-S3 pracuje z logiką 3,3~V, podczas gdy diody WS2812D wymagają sygnału sterującego o napięciu 5~V. Według dokumentacji WS2812D, minimalne napięcie stanu wysokiego ($V_{IH}$) wynosi 0,7$\times$VDD, co przy zasilaniu 5~V daje 3,5~V \cite{ws2812d}. Sygnał 3,3~V z ESP32 znajduje się poniżej tego progu, co może prowadzić do niestabilnej komunikacji lub całkowitego braku reakcji diod.
+
+Rozwiązaniem tego problemu jest zastosowanie bufora napięcia czyli układu podnoszącego poziom sygnału z 3,3~V do 5~V. Istotne jest jednak, aby konwersja odbywała się z minimalnym opóźnieniem. Protokół WS2812 operuje na impulsach o czasie trwania rzędu setek nanosekund (patrz Rysunek~\ref{fig:ws2812-timing}), dlatego popularne konwertery poziomów logicznych oparte na tranzystorach MOSFET lub układach z rezystorami podciągającymi wprowadzają zbyt duże opóźnienia i zniekształcenia sygnału. W projekcie wykorzystano moduł Pixel Boost firmy MSX Elektronika (Rysunek~\ref{fig:pixelboost-photo}), który zawiera szybki bufor cyfrowy zaprojektowany specjalnie do współpracy z diodami WS2812 \cite{pixelboost}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{Pixel Boost - zdjęcie produktu.jpg}
+    \caption{Moduł Pixel Boost \cite{pixelboost}}
+    \label{fig:pixelboost-photo}
+\end{figure}
+
+\subsection{Specyfikacja modułu}
+
+Moduł Pixel Boost ma wymiary zaledwie 18×8~mm, co pozwala na łatwe umieszczenie go wewnątrz obudowy sterownika. Posiada sześć wyprowadzeń rozmieszczonych symetrycznie -- po trzy na stronie wejściowej i wyjściowej. Taka konstrukcja umożliwia przelotowe połączenie linii zasilania i masy, dzięki czemu moduł można wpiąć szeregowo między mikrokontroler a diody bez konieczności prowadzenia dodatkowych przewodów. Szczegółowy opis wyprowadzeń przedstawia Tabela~\ref{tab:pixelboost-spec}.
+
+\begin{table}[H]
+\centering
+\caption{Wyprowadzenia modułu Pixel Boost \cite{pixelboost}}
+\label{tab:pixelboost-spec}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Strona} & \textbf{Pin} & \textbf{Opis} \\
+\hline
+\multirow{3}{*}{Wejście (3.3~V)} & VCC & Zasilanie 5~V \\
+\cline{2-3}
+& DIN & Sygnał sterujący z mikrokontrolera (logika 3,3~V) \\
+\cline{2-3}
+& GND & Masa \\
+\hline
+\multirow{3}{*}{Wyjście (5~V)} & VCC & Zasilanie 5~V \\
+\cline{2-3}
+& DOUT & Sygnał sterujący do łańcucha LED (logika 5~V) \\
+\cline{2-3}
+& GND & Masa \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Schemat podłączenia}
+
+Po stronie wejściowej moduł podłączany jest do mikrokontrolera: pin DIN odbiera sygnał sterujący o napięciu 3,3~V, a VCC i GND zapewniają zasilanie bufora. Po stronie wyjściowej sygnał DOUT (już w logice 5~V) kierowany jest do pierwszej diody łańcucha LED, wraz z odpowiednimi liniami zasilania. Schemat podłączenia przedstawia Rysunek~\ref{fig:pixelboost-schematic}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Pixel Boost - schemat podłączeniowy.jpg}
+    \caption{Schemat podłączenia modułu Pixel Boost \cite{pixelboost}}
+    \label{fig:pixelboost-schematic}
+\end{figure}
+
+\section{Przetwornica DC-DC}
+
+PixelTree wykorzystuje łańcuch 100 diod WS2812D, z których każda przy maksymalnej jasności białego światła pobiera 36~mA (patrz Tabela~\ref{tab:ws2812d-params}). Daje to maksymalne zapotrzebowanie całego łańcucha na poziomie 3,6~A przy napięciu 5~V, czyli 18~W mocy. W praktyce animacje rzadko wykorzystują pełną jasność wszystkich diod jednocześnie, jednak projektując układ zasilania należy uwzględnić scenariusz maksymalnego obciążenia.
+
+W projekcie zastosowano przetwornicę impulsową typu step-down (buck converter), która przekształca napięcie wejściowe 12--24~V DC na stabilne 5~V wymagane przez diody LED i mikrokontroler (Rysunek~\ref{fig:dcdc}). Wybrano wariant o maksymalnym prądzie wyjściowym 10~A, co zapewnia znaczny zapas mocy względem rzeczywistego zapotrzebowania \cite{dcdc-aliexpress}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{Przetwornica_zdjęcie.png}
+    \caption{Przetwornica DC-DC 12--24~V na 5~V/10~A \cite{dcdc-aliexpress}}
+    \label{fig:dcdc}
+\end{figure}
+
+\subsection{Specyfikacja techniczna}
+
+\begin{table}[H]
+\centering
+\caption{Parametry przetwornicy DC-DC \cite{dcdc-aliexpress}}
+\label{tab:dcdc-spec}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Napięcie wejściowe (nominalne) & 12--24~V DC \\
+\hline
+Napięcie wejściowe (zakres) & 10--30~V DC \\
+\hline
+Napięcie wyjściowe & 5~V DC \\
+\hline
+Prąd wyjściowy (max) & 10~A \\
+\hline
+Moc wyjściowa (max) & 50~W \\
+\hline
+Temperatura pracy & $-40$ do $+85$°C \\
+\hline
+Wymiary & 64~$\times$~53~$\times$~20~mm \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Zabezpieczenia}
+
+Przetwornica posiada wbudowane zabezpieczenia zwiększające niezawodność systemu:
+\begin{itemize}
+    \item \textbf{Zabezpieczenie przeciwzwarciowe} -- chwilowe zwarcie wyjścia do masy nie powoduje uszkodzenia układu.
+    \item \textbf{Zabezpieczenie nadprądowe} -- przekroczenie maksymalnego prądu obciążenia nie uszkadza modułu.
+    \item \textbf{Zabezpieczenie nadnapięciowe} -- ochrona przed uszkodzeniem podłączonych urządzeń w przypadku awarii regulacji napięcia.
+    \item \textbf{Zabezpieczenie termiczne} -- automatyczne wyłączenie przy przekroczeniu temperatury 85°C.
+\end{itemize}
+
+\section{Zasilacz sieciowy}
+
+Zasilacz sieciowy stanowi źródło energii dla całego systemu. Wybrany model impulsowy o napięciu wyjściowym 24~V DC i prądzie 3~A, daje moc 72~W (Rysunek~\ref{fig:psu}). Decyzja o zastosowaniu dwustopniowej regulacji napięcia (24~V $\rightarrow$ 5~V) wynikała z ograniczeń rynkowych -- kompaktowe zasilacze 5~V o wymaganej wydajności prądowej (około 10~A) były albo bardzo drogie, albo miały duże gabaryty nieakceptowalne w kontekście estetyki produktu końcowego. Zasilacze 24~V o porównywalnej mocy są znacznie bardziej dostępne i kompaktowe, a konwersja na 5~V odbywa się w przetwornicy DC-DC umieszczonej wewnątrz obudowy sterownika \cite{psu-aliexpress}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Zasilacz_zdjęcie.png}
+    \caption{Zasilacz impulsowy 24~V/3~A \cite{psu-aliexpress}}
+    \label{fig:psu}
+\end{figure}
+
+\subsection{Specyfikacja techniczna}
+
+\begin{table}[H]
+\centering
+\caption{Parametry zasilacza sieciowego \cite{psu-aliexpress}}
+\label{tab:psu-spec}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Napięcie wejściowe & AC 100--240~V, 50/60~Hz \\
+\hline
+Napięcie wyjściowe & DC 24~V \\
+\hline
+Prąd wyjściowy & 3~A ($\pm$5\%) \\
+\hline
+Moc wyjściowa & 72~W \\
+\hline
+Temperatura pracy & 0 do $+40$°C \\
+\hline
+Konstrukcja & Impulsowa (PWM) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Zabezpieczenia i certyfikaty}
+
+Zasilacz posiada wbudowane zabezpieczenia typowe dla urządzeń tej klasy: ochronę przeciwprzepięciową, ochronę nadprądową oraz zabezpieczenie przeciwzwarciowe. Konstrukcja PWM zapewnia stabilne napięcie wyjściowe i wysoką sprawność energetyczną. Według producenta urządzenie przeszło testy kompatybilności elektromagnetycznej (EMC) z poziomem zakłóceń poniżej 20~mV \cite{psu-aliexpress}.
+\section{Łańcuch LED WS2812D}
+
+Łańcuch oświetleniowy składa się ze 100 diod WS2812D w obudowie typu ,,koralik'' \cite{ws2812d-chain}. Forma taka została wybrana ze względu na estetykę, ponieważ w przeciwieństwie do taśm LED, pojedyncze punkty świetlne lepiej oddają charakter tradycyjnych lampek choinkowych. Podstawowe informacje o diodach WS2812D przedstawiono w rozdziale~\ref{sec:esp32s3}.
+
+\subsection{Parametry elektryczne diody}
+
+Każdy koralik WS2812D zawiera trzy diody LED (czerwony, zielony, niebieski) oraz zintegrowany sterownik. Parametry elektryczne przedstawia Tabela~\ref{tab:ws2812d-params}.
+
+\begin{table}[H]
+\centering
+\caption{Parametry elektryczne diody WS2812D \cite{ws2812d-chain}}
+\label{tab:ws2812d-params}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Napięcie zasilania ($V_{DD}$) & 3--5,5~V \\
+\hline
+Maksymalny prąd na kanał (R/G/B) & 12~mA \\
+\hline
+Prąd maksymalny (biały) & 36~mA \\
+\hline
+Temperatura pracy & od $-20$ do $+70$°C \\
+\hline
+Temperatura przechowywania & od $-25$ do $+75$°C \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{schemat diody WS2812D.jpg}
+    \caption{Schemat diody WS2812D \cite{ws2812d-chain}}
+    \label{fig:ws2812d-schematic}
+\end{figure}
+
+\subsection{Konstrukcja łańcucha}
+
+Łańcuch został zmontowany ręcznie. Każda dioda jest połączona z sąsiednimi za pomocą trzech osobnych przewodów, które po przylutowaniu zostały zaplecione w estetyczną wiązkę. Diody rozmieszczono w odstępach około 10~cm, co przy 100 elementach daje łączną długość łańcucha około 10~m. Przewody pełnią funkcję: zasilania (VCC), masy (GND) oraz linii danych (DIN/DOUT). Sygnał sterujący propaguje kaskadowo co oznacza, że wyjście DOUT każdej diody połączone jest z wejściem DIN następnej.
+
+Zgodnie z zaleceniami producenta \cite{ws2812d}, przy każdej diodzie zamontowano kondensator filtrujący między liniami VCC i GND. Zastosowano kondensatory ceramiczne o pojemności 1~µF firmy Samsung, model: CL21B105KAFNNNE \cite{samsung-cap}. Choć według dokumentacji diody \cite{ws2812d} wystarczający byłby kondensator 100~nF, większa pojemność zapewnia dodatkowy margines stabilności zasilania i nie wpływa negatywnie na działanie układu.
+
+\subsection{Parametry świetlne}
+
+Tabela~\ref{tab:ws2812d-light} przedstawia parametry optyczne diod WS2812D. Wartości luminancji podano dla typowego prądu roboczego 20~mA na kanał.
+
+\begin{table}[H]
+\centering
+\caption{Parametry świetlne diody WS2812D \cite{ws2812d-chain}}
+\label{tab:ws2812d-light}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Parametr} & \textbf{Czerwony} & \textbf{Zielony} & \textbf{Niebieski} \\
+\hline
+Długość fali [nm] & 617--626 & 515--525 & 460--470 \\
+\hline
+Luminancja [mcd] & 120--350 & 800--1500 & 100--400 \\
+\hline
+Strumień świetlny [lm] & 0,5--0,8 & 3,5--5,5 & 0,8--1,5 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Okablowanie}
+Do połączenia diod w kompletny łańcuch zastosowano linkę miedzianą o przekroju 0,35~mm² z izolacją PVC \cite{przewod-avt}. Linka (przewód wielożyłowy) została wybrana ze względu na znacznie większą elastyczność w porównaniu z drutem jednożyłowym. Przekrój 0,35~mm² stanowi kompromis pomiędzy trzema czynnikami: giętkością przewodu (istotną przy owijaniu wokół choinki), kompaktowością wiązki (zaplecione trzy linki nie powinny być grubsze od samego koralika LED) oraz spadkiem napięcia na długości łańcucha.
+
+\begin{table}[H]
+\centering
+\caption{Parametry przewodu zastosowanego w łańcuchu \cite{przewod-avt}}
+\label{tab:wire-params}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Przekrój żyły & 0,35~mm² \\
+\hline
+Materiał żyły & Miedź (Cu) \\
+\hline
+Rezystancja przewodu & $\sim$0,05~$\Omega$/m \\
+\hline
+Izolacja & PVC \\
+\hline
+Obciążalność prądowa & do 6~A \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Analiza spadku napięcia}
+
+W łańcuchu LED prąd w przewodzie nie jest stały na całej długości. Odcinek między zasilaczem a pierwszą diodą przewodzi prąd dla wszystkich 100 diod, czyli 3,6~A. Po każdej diodzie prąd zmniejsza się o 36~mA. Przy rezystancji linki 0,05~$\Omega$/m i odległości między diodami 10~cm, rezystancja pojedynczego segmentu wynosi $R_{seg} = 0,005$~$\Omega$.
+
+Spadek napięcia na linii VCC (lub GND) można obliczyć jako sumę spadków na kolejnych segmentach:
+\begin{equation}
+\Delta U_{VCC} = \sum_{n=1}^{100} I_n \times R_{seg} = R_{seg} \times \sum_{n=1}^{100} (101-n) \times 0,036\text{~A}
+\end{equation}
+
+Po obliczeniu sumy szeregu arytmetycznego:
+\begin{equation}
+\Delta U_{VCC} = 0,005\text{~}\Omega \times 0,036\text{~A} \times \frac{100 \times 101}{2} \approx 0,9\text{~V}
+\end{equation}
+
+Uwzględniając obie linie (VCC i GND), teoretyczny maksymalny spadek napięcia na ostatniej diodzie przy pełnym obciążeniu (wszystkie 100 diod świeci białym światłem na 100\% jasności) wynosi około 1,8~V. Rzeczywisty pomiar napięcia na ostatniej diodzie łańcucha wskazał wartość 3,55~V przy napięciu zasilania 5,04~V na wejściu, co daje rzeczywisty spadek napięcia na poziomie 1,49~V i jest to wartość niższa od teoretycznych szacunków.
+
+W praktyce różnice w jasności między pierwszą a ostatnią diodą nie są zauważalne gołym okiem. Wynika to z faktu, że końcowe napięcie 3,55~V wciąż mieści się w dopuszczalnym zakresie pracy diod WS2812D (3,0--5,5~V), co gwarantuje ich poprawne działanie. Gdyby spadek napięcia był głębszy (poniżej 3~V), diody zaczęłyby tracić zdolność do poprawnego wyświetlania barwy niebieskiej i zielonej, co objawiałoby się charakterystycznym "czerwienieniem" bieli.
+
+\section{Obudowa}
+
+Obudowa sterownika została zaprojektowana z myślą o pomieszczeniu następujących komponentów elektronicznych: przetwornicy DC-DC, mikrokontrolera XIAO ESP32-S3 Plus oraz modułu Pixel Boost. Projekt wykonano w programie OpenSCAD \cite{openscad} -- parametrycznym narzędziu CAD opartym na języku skryptowym, które umożliwia łatwe modyfikowanie wymiarów i generowanie modeli gotowych do druku 3D.
+
+\subsection{Wymagania projektowe}
+
+Przy projektowaniu obudowy uwzględniono następujące wymagania:
+\begin{itemize}
+    \item \textbf{Wymiary wewnętrzne} -- przestrzeń na przetwornicę z marginesem na gniazdo zasilania i okablowanie.
+    \item \textbf{Otwory kablowe} -- otwór na panelowe gniazdo DC 2,1/5,5~mm (gwint M11) oraz otwór na przewody wychodzące do łańcucha LED.
+    \item \textbf{Wentylacja} -- szczeliny wentylacyjne zapewniające odprowadzenie ciepła z przetwornicy.
+    \item \textbf{Estetyka} -- zaokrąglone narożniki i kompaktowe wymiary.
+\end{itemize}
+
+\subsection{Parametry obudowy}
+
+\begin{table}[H]
+\centering
+\caption{Wymiary obudowy sterownika}
+\label{tab:case-dims}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Parametr} & \textbf{Wartość} \\
+\hline
+Wymiary wewnętrzne & 75~$\times$~70~$\times$~30~mm \\
+\hline
+Grubość ścian & 2,5~mm \\
+\hline
+Wymiary zewnętrzne & 80~$\times$~75~$\times$~32,5~mm \\
+\hline
+Promień zaokrąglenia narożników & 3~mm \\
+\hline
+Otwór na gniazdo DC & $\varnothing$11~mm \\
+\hline
+Otwór na przewody LED & $\varnothing$4,5~mm \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Konstrukcja}
+
+Obudowa składa się z dwóch części: korpusu i pokrywy. Korpus zawiera wnękę na komponenty oraz otwory funkcjonalne. Pokrywa posiada wewnętrzną krawędź, która wchodzi wewnątrz korpusu zapewniając właściwe spasowanie obu elementów ze sobą.
+
+Na bokach obudowy umieszczono po trzy szczeliny wentylacyjne o wymiarach 15×2~mm, rozmieszczone symetrycznie. Zapewniają one konwekcyjny przepływ powietrza niezbędny do odprowadzenia ciepła generowanego przez przetwornicę oraz mikrokontroler.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{obudowa_render.png}
+    \caption{Model 3D obudowy sterownika}
+    \label{fig:case-render}
+\end{figure}
+
+\subsection{Projekt w OpenSCAD}
+
+Model obudowy został zapisany w pliku \texttt{pixeltree\_case\_model.scad}. Poniżej przedstawiono kluczowe parametry projektu:
+
+\begin{lstlisting}[language=C, caption=Parametry obudowy w OpenSCAD, label=lst:openscad]
+// Wymiary wewnetrzne
+inner_length = 75;   // 15mm gniazdo + 58mm przetwornica + margines
+inner_width = 70;
+inner_height = 30;
+
+// Grubosc scian
+wall = 2.5;
+tolerance = 0.3;     // Tolerancja drukarki
+
+// Otwory kablowe
+dc_socket_hole = 11;   // Gniazdo DC 2,1/5,5mm (gwint M11)
+led_cable_hole = 4.5;  // Przewody LED (3x linka)
+
+// Wentylacja
+vent_slot_width = 2;
+vent_slot_length = 15;
+\end{lstlisting}
+
+\subsection{Produkcja}
+
+Obudowa została wydrukowana na drukarce 3D z wykorzystaniem filamentu PLA w kolorze czarnym. Materiał PLA wybrano ze względu na łatwość druku i wystarczającą wytrzymałość mechaniczną dla tego zastosowania.
+
+\section{Schemat połączeń}
+
+Rysunek~\ref{fig:schematic} przedstawia schemat blokowy systemu PixelTree z zaznaczonym przepływem zasilania (ciągłe czerwone linie) oraz sygnałów sterujących (przerwyane niebieskie linie).
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, thick, minimum height=1.2cm, minimum width=2.5cm, align=center, fill=gray!10},
+        smallblock/.style={rectangle, draw, thick, minimum height=1cm, minimum width=2cm, align=center, fill=blue!10},
+        power/.style={->, thick, red!70!black, >=stealth},
+        signal/.style={->, thick, blue!70!black, >=stealth, dashed},
+        label/.style={font=\footnotesize}
+    ]
+    
+    % Węzły
+    \node[block] (psu) at (0, 0) {Zasilacz\\AC/DC\\230V$\rightarrow$24V};
+    \node[block] (dcdc) at (4, 0) {Przetwornica\\DC-DC\\24V$\rightarrow$5V};
+    \node[smallblock] (esp) at (8, 1.5) {ESP32-S3\\Plus};
+    \node[smallblock] (boost) at (8, -1.5) {Pixel\\Boost};
+    \node[block] (led) at (12.5, 0) {Łańcuch LED\\WS2812D\\(100 szt.)};
+    
+    % PSU -> DC-DC
+    \draw[power] (psu.east) -- node[above, label] {24V DC} (dcdc.west);
+    
+    % DC-DC -> ESP32
+    \draw[power] (dcdc.east) -- ++(0.5, 0) |- node[above, label, pos=0.75] {5V DC} (esp.west);
+    
+    % DC-DC -> Pixel Boost  
+    \draw[power] (dcdc.east) -- ++(0.5, 0) |- node[below, label, pos=0.75] {5V DC} (boost.west);
+    
+    % Pixel Boost -> LED
+    \draw[power] ([yshift=0.2cm]boost.east) -- ++(0.5, 0) -- ++(0, 1.7) -- ([yshift=0.4cm]led.west) node[above, label, pos=0.6] {5V DC};
+    
+    % ESP32 -> Pixel Boost
+    \draw[signal] (esp.south) -- node[right, label] {GPIO44} (boost.north);
+    
+    % Pixel Boost -> LED
+    \draw[signal] ([yshift=-0.2cm]boost.east) -- ++(0.75, 0) -- ++(0, 1.4) -- ([yshift=-0.3cm]led.west) node[below, label, pos=0.6] {DOUT};
+    
+    % Legenda
+    \node at (6.25, -3.5) {
+        \tikz{
+            \draw[power] (0,0) -- (0.8,0); 
+            \node[anchor=west] at (1,0) {\footnotesize Zasilanie};
+            \draw[signal] (3,0) -- (3.8,0); 
+            \node[anchor=west] at (4,0) {\footnotesize Sygnał danych};
+        }
+    };
+    
+    \end{tikzpicture}
+    \caption{Schemat blokowy systemu PixelTree}
+    \label{fig:schematic}
+\end{figure}
+
+\section{Realizacja fizyczna prototypu}
+Poniżej przedstawiono zdjęcia gotowego systemu. Rysunek~\ref{fig:device-photo} prezentuje zestawienie elementów składowych urządzenia. Natomiast rysunek~\ref{fig:device-action} pokazuje system w trakcie pracy z aktywnym efektem \texttt{Gradient} dostępnym w kategorii efektów \texttt{Statyczne}.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PixelTree_Device.jpg}
+        \caption{Komponenty prototypu PixelTree}
+        \label{fig:device-photo}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PixelTree_In_Action.png}
+        \caption{System w trakcie pracy}
+        \label{fig:device-action}
+    \end{minipage}
+\end{figure}
+
+% ============================================================================
+% ROZDZIAŁ 5: FIRMWARE
+% ============================================================================
+\chapter{Oprogramowanie układowe -- Firmware}
+
+\section{Architektura oprogramowania}
+
+Firmware systemu PixelTree został stworzony w języku C++ z wykorzystaniem frameworka Arduino oraz systemu operacyjnego czasu rzeczywistego FreeRTOS. Architektura oparta jest na modułach realizujących odrębne funkcje, co ułatwia utrzymanie i rozbudowę kodu.
+
+\subsection{Struktura modułów}
+
+Oprogramowanie składa się z 13 plików, z których każdy realizuje określoną funkcjonalność:
+
+\begin{itemize}
+    \item \textbf{Firmware.ino} -- główny plik programu, inicjalizacja systemu
+    \item \textbf{Config.h} -- konfiguracja systemu: piny GPIO, parametry WiFi/BLE, stałe czasowe
+    \item \textbf{LEDController.h} -- kontroler animacji LED z taskiem FreeRTOS
+    \item \textbf{Effects.h} -- implementacja 42 efektów świetlnych
+    \item \textbf{EffectDefs.h} -- definicje struktur i stałych dla efektów
+    \item \textbf{EffectParams.h} -- system parametrów dla efektów
+    \item \textbf{Palettes.h} -- predefiniowane palety kolorów
+    \item \textbf{WiFiManager.h} -- zarządzanie połączeniem WiFi
+    \item \textbf{BLEProvisioning.h} -- konfigurowanie WiFi przez Bluetooth Low Energy
+    \item \textbf{HTTPProvisioning.h} -- serwer HTTP dla trybu Access Point
+    \item \textbf{LEDApi.h} -- REST API do sterowania efektami
+    \item \textbf{NVSManager.h} -- zapis/odczyt ustawień z pamięci nieulotnej
+    \item \textbf{SerialLogger.h} -- system logowania, niezbędny przy debugowaniu
+\end{itemize}
+
+\subsection{Podział zadań na rdzenie procesora}
+
+Jak wcześniej wspomniano (sekcja~\ref{subsec:arduino-freertos}) -- cała rodzina mikrokontrolerów ESP32-S3 posiada dwa rdzenie, co umożliwia równoległe wykonywanie zadań. W projekcie zastosowano następujący podział:
+
+\begin{itemize}
+    \item \textbf{Rdzeń 0} -- animacje LED (priorytet 3) -- płynne renderowanie efektów świetlnych z prędkością animacji na poziomie 60~FPS
+    \item \textbf{Rdzeń 1} -- komunikacja WiFi/BLE, serwer HTTP, obsługa żądań API (priorytety 1--2)
+\end{itemize}
+
+Taki podział zapewnia, że intensywna komunikacja sieciowa nie wpływa na płynność animacji świetlnych. Komunikacja między zadaniami odbywa się poprzez współdzielone zmienne statyczne. Moduł API (działający na rdzeniu 1) ustawia flagę zmiany efektu, a LED Task (działający na rdzeniu 0) odczytuje ją w kolejnej klatce i resetuje. Dzięki temu, że operacje na pojedynczych zmiennych typu \texttt{bool} i \texttt{uint8\_t} są atomowe w architekturze ESP32, nie jest wymagane stosowanie muteksów.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        module/.style={rectangle, draw, thick, minimum height=0.7cm, minimum width=2.2cm, align=center, fill=blue!10, font=\footnotesize},
+        core/.style={rectangle, draw, thick, align=center, fill=gray!10},
+        arrow/.style={->, thick, >=stealth}
+    ]
+    
+    % Core 0
+    \node[core, minimum height=1.5cm, minimum width=2.8cm] (core0) at (0, 0) {};
+    \node[above] at (core0.north) {\footnotesize\textbf{Rdzeń 0}};
+    \node[module] (led) at (0, 0) {LEDController};
+    
+    % Core 1
+    \node[core, minimum height=3.2cm, minimum width=2.8cm] (core1) at (4, 0) {};
+    \node[above] at (core1.north) {\footnotesize\textbf{Rdzeń 1}};
+    \node[module] (wifi) at (4, 0.7) {WiFiManager};
+    \node[module] (ble) at (4, -0.1) {BLE};
+    \node[module] (http) at (4, -0.9) {HTTP/API};
+    
+    % Strzalki
+    \draw[arrow, dashed] (core1.west) -- (core0.east) node[midway, above] {\tiny flagi};
+    
+    \end{tikzpicture}
+    \caption{Podział zadań na rdzenie ESP32-S3}
+    \label{fig:firmware-arch}
+\end{figure}
+
+\subsection{Przepływ danych}
+
+Rysunek~\ref{fig:sequence-diagram} pokazuje komunikację pomiędzy komponentami systemu w momencie zmiany efektu.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=1.15, transform shape,
+        actor/.style={rectangle, draw, thick, minimum height=0.6cm, minimum width=1.8cm, fill=gray!20, font=\footnotesize},
+        lifeline/.style={dashed, thick},
+        arrow/.style={->, thick, >=stealth},
+        asyncarrow/.style={->, thick, >=stealth, dashed},
+        note/.style={font=\scriptsize},
+        activation/.style={rectangle, fill=blue!20, minimum width=0.3cm}
+    ]
+    
+    \node[actor] (app) at (0, 0) {Aplikacja};
+    \node[actor] (api) at (3.5, 0) {LEDApi};
+    \node[actor] (ctrl) at (7, 0) {LEDController};
+    \node[actor] (task) at (10.5, 0) {LED Task};
+    
+    \draw[lifeline] (app.south) -- ++(0, -5.5);
+    \draw[lifeline] (api.south) -- ++(0, -5.5);
+    \draw[lifeline] (ctrl.south) -- ++(0, -5.5);
+    \draw[lifeline] (task.south) -- ++(0, -5.5);
+    
+    \node[activation, minimum height=1.2cm] at (3.5, -1.6) {};
+    \node[activation, minimum height=0.8cm] at (7, -2) {};
+    
+    \draw[arrow] (0, -1) -- node[above, note] {POST /effect} (3.5, -1);
+    \draw[arrow] (3.5, -1.6) -- node[above, note] {setEffect(id)} (7, -1.6);
+    \draw[arrow] (7, -2.2) -- node[below, note] {return} (3.5, -2.2);
+    
+    \draw[asyncarrow] (7, -3) -- node[above, note] {effectChanged} (10.5, -3);
+    
+    \node[activation, minimum height=0.6cm] at (10.5, -3.8) {};
+    
+    \draw[arrow] (3.5, -4.8) -- node[above, note] {JSON 200 OK} (0, -4.8);
+    
+    \end{tikzpicture}
+    \caption{Diagram sekwencji -- zmiana efektu}
+    \label{fig:sequence-diagram}
+\end{figure}
+
+Przepływ sterowania wewnątrz firmware realizowany jest w następujących krokach:
+
+\begin{enumerate}
+    \item Aplikacja mobilna inicjuje proces, wysyłając żądanie HTTP metodą POST (np. ze zmianą efektu) do REST API sterownika.
+    \item Moduł \texttt{LEDApi} (pracujący na rdzeniu 1) przyjmuje i waliduje żądanie, a następnie wywołuje metodę w \texttt{LEDController}.
+    \item \texttt{LEDController} aktualizuje parametry w pamięci i ustawia flagę sygnalizującą zmianę (\texttt{effectChanged}), po czym natychmiast zwraca sterowanie, nie blokując wątku sieciowego.
+    \item Serwer HTTP odsyła do aplikacji odpowiedź 200 OK z potwierdzeniem JSON, kończąc obsługę po stronie klienta.
+    \item Asynchronicznie, w kolejnym cyklu pętli na rdzeniu 0, zadanie \texttt{LED Task} wykrywa flagę zmiany i aktywuje nowy algorytm generowania efektu na diodach.
+\end{enumerate}
+
+\section{Konfiguracja systemu}
+
+Plik nagłówkowy \texttt{Config.h} pełni rolę centralnego punktu konfiguracyjnego całego oprogramowania układowego. Zgromadzono w nim wszystkie stałe, definicje mapowania pinów oraz parametry pracy systemu, co ułatwia dostosowanie firmware-u do ewentualnych zmian sprzętowych bez konieczności modyfikowania logiki biznesowej w wielu plikach źródłowych.
+
+Kluczowe sekcje konfiguracyjne obejmują:
+
+\begin{itemize}
+    \item \textbf{Konfiguracja sprzętowa (GPIO)} -- definicje pinów dla diod LED (GPIO44), przycisku reset (GPIO9) oraz wbudowanej diody statusowej (GPIO21).
+    \item \textbf{Parametry WiFi} -- stałe określające zachowanie modułu sieciowego, takie jak czas oczekiwania na połączenie (30s), interwał ponawiania prób (5s) oraz kanał i limit klientów dla trybu Access Point.
+    \item \textbf{Konfiguracja BLE} -- definicje UUID dla usług i charakterystyk GATT, rozmiar MTU oraz nazwa urządzenia.
+    \item \textbf{Pamięć nieulotna (NVS)} -- nazwy kluczy do zapisu danych WiFi, wybranego efektu oraz stanu konfiguracji urządzenia.
+    \item \textbf{Serwer HTTP} -- port nasłuchu (80) oraz konfiguracja CORS dla żądań z aplikacji mobilnej.
+    \item \textbf{Parametry zadań FreeRTOS} -- określenie priorytetów i rozmiarów stosu dla poszczególnych zadań systemowych. Zadanie sterujące diodami LED otrzymało najwyższy priorytet (3) oraz największy stos (8192 bajtów), aby zapewnić płynność animacji.
+    \item \textbf{System logowania} -- konfiguracja poziomów logów (ERROR, WARN, INFO, DEBUG) oraz rozmiar bufora komunikatów.
+    \item \textbf{Bezpieczeństwo} -- definicje rozmiarów kluczy kryptograficznych (AES-128, ECDH P-256).
+\end{itemize}
+
+Dzięki wykorzystaniu dyrektyw preprocesora \texttt{\#define}, konfiguracja nie obciąża pamięci RAM mikrokontrolera, gdyż wartości są podstawiane bezpośrednio w czasie kompilacji.
+
+\section{Kontroler LED}
+
+Moduł \texttt{LEDController} stanowi centralny element programu odpowiadając za generowanie animacji świetlnych. Zaimplementowany jako klasa statyczna, udostępnia metody do zmiany efektów, ustawiania jasności oraz dynamicznej modyfikacji parametrów w czasie rzeczywistym.
+
+Kontroler wykorzystuje bibliotekę FastLED do komunikacji z diodami oraz system FreeRTOS do uruchomienia dedykowanego zadania renderującego na rdzeniu 0.
+
+\subsection{Wątek systemu FreeRTOS}
+
+Renderowanie efektów odbywa się w osobnym zadaniu FreeRTOS (\texttt{LED Task}), które działa w nieskończonej pętli z odświeżaniem około 60 FPS. Zadanie jest przypisane do rdzenia 0.
+
+\begin{lstlisting}[language=C++, caption=Utworzenie zadania LED na rdzeniu 0, label=lst:led-task]
+xTaskCreatePinnedToCore(
+    ledTask,              // Funkcja zadania
+    "LEDTask",            // Nazwa
+    TASK_STACK_SIZE_LED,  // Rozmiar stosu (8192 B)
+    NULL,                 // Parametry
+    TASK_PRIORITY_LED,    // Priorytet (3)
+    &ledTaskHandle,       // Uchwyt
+    0                     // Rdzen 0
+);
+\end{lstlisting}
+
+Główna pętla zadania sprawdza flagę \texttt{effectChanged}, a następnie wywołuje funkcję aktualnego efektu i przesyła dane do diod LED za pomocą \texttt{FastLED.show()}.
+
+\subsection{Struktura efektu}
+
+Każdy efekt jest zdefiniowany przez strukturę \texttt{EffectEntry} zawierającą trzy pola:
+
+\begin{lstlisting}[language=C++, caption=Struktura definicji efektu, label=lst:effect-entry]
+struct EffectEntry {
+    const char* name;    // Nazwa wyswietlana w UI
+    void (*func)();      // Wskaznik na funkcje renderujaca
+    uint8_t category;    // Kategoria
+};
+\end{lstlisting}
+
+\section{Efekty świetlne}
+
+System oferuje 42 autorskie efekty świetlne pogrupowane w 9 kategorii, gdzie biblioteka FastLED odpowiada tylko za niskopoziomowe sterowanie diodami. Każdy efekt posiada zestaw konfigurowalnych parametrów modyfikowalnych w czasie rzeczywistym przez REST API.
+
+\subsection{Przegląd kategorii}
+
+\begin{table}[H]
+\centering
+\caption{Kategorie efektów świetlnych}
+\label{tab:effect-categories}
+\begin{tabular}{|c|l|c|p{10cm}|}
+\hline
+\textbf{ID} & \textbf{Kategoria} & \textbf{Liczba} & \textbf{Charakterystyka} \\
+\hline
+1 & Static & 4 & Efekty statyczne -- stałe wzory bez animacji \\
+\hline
+2 & Wave & 4 & Animacje falowe oparte na funkcjach trygonometrycznych \\
+\hline
+3 & Chase & 5 & Elementy przemieszczające się wzdłuż łańcucha \\
+\hline
+4 & Twinkle & 5 & Losowe migotanie i błyski symulujące gwiazdy \\
+\hline
+5 & Organic & 7 & Symulacje zjawisk naturalnych (ogień, woda, zorza) \\
+\hline
+6 & Holiday & 5 & Efekty tematyczne \\
+\hline
+7 & Special & 7 & Zaawansowane animacje z symulacją fizyki \\
+\hline
+8 & Fade & 3 & Płynne przejścia jasności i kolorów \\
+\hline
+9 & Alarm & 2 & Intensywne efekty sygnalizacyjne \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Opis efektów}
+
+\subsubsection{Static}
+
+\begin{description}
+    \item[Solid] Jednolity kolor na całym łańcuchu. \\
+    \textit{Parametry:} \texttt{color}, \texttt{brightness}.
+    
+    \item[Gradient] Płynne przejście 2--3 kolorów z wyborem stylu. \\
+    \textit{Parametry:} \texttt{colorStart/Middle/End}, \texttt{threePoint}, \texttt{style}.
+    
+    \item[Spots] Punkty świetlne w równych odstępach z opcjonalnym wygaszaniem krawędzi. \\
+    \textit{Parametry:} \texttt{color}, \texttt{spread}, \texttt{width}, \texttt{fade}.
+    
+    \item[Pattern] Naprzemienne segmenty dwóch kolorów. \\
+    \textit{Parametry:} \texttt{colorFg/Bg}, \texttt{fgSize}, \texttt{bgSize}.
+\end{description}
+
+\subsubsection{Wave}
+
+\begin{description}
+    \item[Rainbow Wave] Przesuwająca się tęcza w pełnym spektrum HSV. \\
+    \textit{Parametry:} \texttt{speed}, \texttt{size}, \texttt{direction}, \texttt{saturation}.
+    
+    \item[Color Wave] Fala 2--8 zdefiniowanych kolorów z interpolacją. \\
+    \textit{Parametry:} \texttt{colors[8]}, \texttt{numColors}, \texttt{speed}, \texttt{direction}.
+    
+    \item[Oscillate] Punkt odbijający się między końcami łańcucha. \\
+    \textit{Parametry:} \texttt{colorPrimary/Secondary}, \texttt{pointSize}, \texttt{speed}.
+    
+    \item[Wavy] Sinusoidalna modulacja jasności na palecie kolorów. \\
+    \textit{Parametry:} \texttt{palette}, \texttt{amplitude}, \texttt{frequency}, \texttt{speed}.
+\end{description}
+
+\subsubsection{Chase}
+
+\begin{description}
+    \item[Theater Chase] Biegnące światła w stylu markizy teatralnej. \\
+    \textit{Parametry:} \texttt{color}, \texttt{gapSize}, \texttt{rainbowMode}, \texttt{speed}.
+    
+    \item[Scanner] Skanujące punkty z ogonami. \\
+    \textit{Parametry:} \texttt{colors[8]}, \texttt{numDots}, \texttt{trailLength}, \texttt{dualMode}, \texttt{overlay}.
+    
+    \item[Comet] Kometa z degradującym się ogonem i opcjonalnymi iskrami. \\
+    \textit{Parametry:} \texttt{color}, \texttt{sparkleColor}, \texttt{trailLength}, \texttt{sparkleEnabled}, \texttt{direction}.
+    
+    \item[Running Lights] Fale świetlne o konfigurowalnym kształcie. \\
+    \textit{Parametry:} \texttt{colors[4]}, \texttt{numColors}, \texttt{waveWidth}, \texttt{shape}, \texttt{dualMode}.
+    
+    \item[Android] Animacja wzorowana na pasku postępu Android. \\
+    \textit{Parametry:} \texttt{colorPrimary/Secondary}, \texttt{sectionWidth}, \texttt{speed}.
+\end{description}
+
+\subsubsection{Twinkle}
+
+\begin{description}
+    \item[Twinkle] Losowe rozjaśnianie i wygaszanie diod. \\
+    \textit{Parametry:} \texttt{twinkleColor}, \texttt{palette}, \texttt{intensity}, \texttt{fadeSpeed}, \texttt{colorMode}.
+    
+    \item[TwinkleFox] Zoptymalizowane migotanie z płynnymi przejściami. \\
+    \textit{Parametry:} \texttt{palette}, \texttt{twinkleRate}, \texttt{fadeOut}.
+    
+    \item[Sparkle] Losowe błyski na jednolitym tle. \\
+    \textit{Parametry:} \texttt{colorSpark}, \texttt{colorBg}, \texttt{intensity}, \texttt{overlay}, \texttt{darkMode}.
+    
+    \item[Glitter] Białe błyski nakładane na tło (tęczowe lub jednokolorowe). \\
+    \textit{Parametry:} \texttt{intensity}, \texttt{rainbowBg}, \texttt{bgColor}, \texttt{overlay}.
+    
+    \item[Starry Night] Nocne niebo z gwiazdami i opcjonalnymi spadającymi gwiazdami. \\
+    \textit{Parametry:} \texttt{density}, \texttt{colorStars}, \texttt{shootingStars}.
+\end{description}
+
+\subsubsection{Organic}
+
+\begin{description}
+    \item[Fire] Symulacja ognia oparta na buforze ciepła z propagacją i wygaszaniem. \\
+    \textit{Parametry:} \texttt{cooling}, \texttt{sparking}, \texttt{boost}, \texttt{palette}.
+    
+    \item[Candle] Migotanie płomienia świecy z naturalnymi wahaniami jasności. \\
+    \textit{Parametry:} \texttt{intensity}, \texttt{color}, \texttt{colorShift}, \texttt{multiMode}.
+    
+    \item[Fire Flicker] Uproszczone migotanie ognia. \\
+    \textit{Parametry:} \texttt{intensity}, \texttt{color}.
+    
+    \item[Lava] Efekt lampy lawowej z płynnymi ``bąblami'' koloru. \\
+    \textit{Parametry:} \texttt{blobSize}, \texttt{smoothness}, \texttt{speed}.
+    
+    \item[Aurora] Zorza polarna z falującymi pasami kolorów. \\
+    \textit{Parametry:} \texttt{intensity}, \texttt{palette}, \texttt{speed}.
+    
+    \item[Pacifica] Oceaniczne fale. \\
+    \textit{Parametry:} \texttt{palette}, \texttt{speed}.
+    
+    \item[Lake] Odbicia świetlne na wodzie. \\
+    \textit{Parametry:} \texttt{palette}, \texttt{speed}.
+\end{description}
+
+\subsubsection{Holiday}
+
+\begin{description}
+    \item[Fairy Lights] Losowe migotanie lampek choinkowych. \\
+    \textit{Parametry:} \texttt{numFlashers}, \texttt{colorMode}, \texttt{palette}.
+    
+    \item[Christmas Chase] Gonitwa świateł w barwach świątecznych. \\
+    \textit{Parametry:} \texttt{color1/2}, \texttt{pattern}, \texttt{speed}.
+    
+    \item[Halloween Eyes] Świecące oczy pojawiające się w ciemności. \\
+    \textit{Parametry:} \texttt{duration}, \texttt{fadeTime}, \texttt{color}, \texttt{overlay}.
+    
+    \item[Fireworks] Fajerwerki z symulacją grawitacji. \\
+    \textit{Parametry:} \texttt{chance}, \texttt{fragments}, \texttt{gravity}, \texttt{overlay}.
+    
+    \item[Snow Sparkle] Padający śnieg z błyszczącymi płatkami. \\
+    \textit{Parametry:} \texttt{density}, \texttt{color}, \texttt{direction}, \texttt{speed}.
+\end{description}
+
+\subsubsection{Special}
+
+\begin{description}
+    \item[Bouncing Balls] Symulacja odbijających się kulek z fizyką (grawitacja, utrata energii). \\
+    \textit{Parametry:} \texttt{gravity}, \texttt{numBalls}, \texttt{trail}, \texttt{overlay}, \texttt{palette}.
+    
+    \item[Popcorn] Eksplodujące punkty wyskakujące w górę. \\
+    \textit{Parametry:} \texttt{intensity}, \texttt{palette}, \texttt{speed}.
+    
+    \item[Drip] Ściekające krople z akumulacją na dole. \\
+    \textit{Parametry:} \texttt{gravity}, \texttt{numDrips}, \texttt{overlay}, \texttt{color}.
+    
+    \item[Plasma] Psychodeliczna plazma generowana funkcjami sinusoidalnymi. \\
+    \textit{Parametry:} \texttt{phase}, \texttt{intensity}, \texttt{speed}.
+    
+    \item[Lightning] Losowe błyskawice. \\
+    \textit{Parametry:} \texttt{frequency}, \texttt{intensity}, \texttt{color}, \texttt{overlay}.
+    
+    \item[Matrix] Spadające znaki w stylu filmu Matrix. \\
+    \textit{Parametry:} \texttt{spawningRate}, \texttt{trailLength}, \texttt{color}.
+    
+    \item[Heartbeat] Pulsowanie symulujące bicie serca. \\
+    \textit{Parametry:} \texttt{bpm}, \texttt{color}.
+\end{description}
+
+\subsubsection{Fade}
+
+\begin{description}
+    \item[Breathe] Płynne pulsowanie jasności (efekt ``oddychania''). \\
+    \textit{Parametry:} \texttt{colorPrimary/Secondary}, \texttt{twoColor}, \texttt{speed}.
+    
+    \item[Dissolve] Losowe ``rozpuszczanie'' jednego koloru w drugi. \\
+    \textit{Parametry:} \texttt{repeatSpeed}, \texttt{dissolveSpeed}, \texttt{randomColors}, \texttt{color}.
+    
+    \item[Fade] Sekwencyjne przejścia między kolorami. \\
+    \textit{Parametry:} \texttt{colors[8]}, \texttt{numColors}, \texttt{loop}, \texttt{speed}.
+\end{description}
+
+\subsubsection{Alarm}
+
+\begin{description}
+    \item[Police Lights] Symulacja świateł policyjnych z trzema stylami. \\
+    \textit{Parametry:} \texttt{color1/2}, \texttt{style}, \texttt{speed}.
+    
+    \item[Strobe] Stroboskop o konfigurowalnej częstotliwości. \\
+    \textit{Parametry:} \texttt{frequency}, \texttt{color}, \texttt{mode}.
+\end{description}
+
+\subsection{Słownik parametrów}
+
+\begin{longtable}{|l|l|l|p{5cm}|}
+\caption{Parametry efektów -- typy, zakresy wartości i opisy} \label{tab:effect-params} \\
+\hline
+\textbf{Parametr} & \textbf{Typ} & \textbf{Zakres} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\endhead
+
+\endfoot
+
+\hline
+\endlastfoot
+
+\multicolumn{4}{|c|}{\textit{\textbf{Kolory}}} \\
+\hline
+\texttt{color} & CRGB & \#000000--\#FFFFFF & Główny kolor efektu \\
+\hline
+\texttt{colorPrimary/Secondary} & CRGB & \#000000--\#FFFFFF & Para kolorów \\
+\hline
+\texttt{colorStart/Middle/End} & CRGB & \#000000--\#FFFFFF & Punkty kontrolne gradientu \\
+\hline
+\texttt{colorFg/Bg} & CRGB & \#000000--\#FFFFFF & Kolory pierwszego/drugiego planu \\
+\hline
+\texttt{colors[n]} & CRGB[8] & \#000000--\#FFFFFF & Tablica do 8 kolorów \\
+\hline
+\texttt{numColors} & uint8 & 1--8 & Liczba aktywnych kolorów \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Animacja}}} \\
+\hline
+\texttt{speed} & uint8 & 0--255 & Szybkość animacji \\
+\hline
+\texttt{direction} & Direction & 0--5 & FORWARD, REVERSE \\
+\hline
+\texttt{intensity} & uint8 & 0--255 & Siła efektu \\
+\hline
+\texttt{fadeSpeed} & uint8 & 0--255 & Szybkość wygaszania \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Geometria}}} \\
+\hline
+\texttt{size} & uint8 & 1--50 & Szerokość cyklu (tęczy) \\
+\hline
+\texttt{spread} & uint8 & 1--30 & Odstęp między elementami \\
+\hline
+\texttt{width} & uint8 & 1--10 & Szerokość elementu \\
+\hline
+\texttt{trailLength} & uint8 & 1--50 & Długość ogona/śladu \\
+\hline
+\texttt{pointSize} & uint8 & 1--20 & Rozmiar punktu \\
+\hline
+\texttt{waveWidth} & uint8 & 1--50 & Szerokość fali \\
+\hline
+\texttt{sectionWidth} & uint8 & 1--50 & Szerokość sekcji \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Liczniki}}} \\
+\hline
+\texttt{numBalls} & uint8 & 1--8 & Liczba kulek \\
+\hline
+\texttt{numDrips} & uint8 & 1--8 & Liczba kropli \\
+\hline
+\texttt{numDots} & uint8 & 1--8 & Liczba punktów \\
+\hline
+\texttt{numFlashers} & uint8 & 1--20 & Liczba migających diod \\
+\hline
+\texttt{density} & uint8 & 0--255 & Gęstość elementów \\
+\hline
+\texttt{fragments} & uint8 & 4--16 & Liczba fragmentów eksplozji \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Parametry specjalne}}} \\
+\hline
+\texttt{palette} & PaletteType & 0--13 & Indeks palety kolorów \\
+\hline
+\texttt{gravity} & uint8 & 100--255 & Siła grawitacji \\
+\hline
+\texttt{cooling} & uint8 & 20--100 & Szybkość stygnięcia (ogień) \\
+\hline
+\texttt{sparking} & uint8 & 50--200 & Częstotliwość iskier (ogień) \\
+\hline
+\texttt{bpm} & uint8 & 40--180 & Tempo bicia serca \\
+\hline
+\texttt{frequency} & uint8 & 0--255 & Częstotliwość \\
+\hline
+\texttt{amplitude} & uint8 & 0--255 & Amplituda fali \\
+\hline
+\texttt{phase} & uint8 & 0--255 & Faza początkowa \\
+\hline
+\texttt{chance} & uint8 & 0--255 & Prawdopodobieństwo zdarzenia \\
+\hline
+\texttt{duration} & uint16 & 0--65535 & Czas trwania [ms] \\
+\hline
+\texttt{fadeTime} & uint16 & 0--65535 & Czas wygaszania [ms] \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Tryby i style}}} \\
+\hline
+\texttt{style} & enum & 0--2 & Styl efektu (zależnie od efektu) \\
+\hline
+\texttt{shape} & WaveShape & 0--3 & SINE, SAW, SQUARE, TRIANGLE \\
+\hline
+\texttt{colorMode} & enum & 0--3 & Tryb koloru (zależnie od efektu) \\
+\hline
+\texttt{pattern} & enum & 0--2 & Wzór animacji \\
+\hline
+\texttt{mode} & enum & 0--2 & Tryb animacji \\
+\hline
+\multicolumn{4}{|c|}{\textit{\textbf{Flagi (bool)}}} \\
+\hline
+\texttt{rainbowMode} & bool & -- & Tęcza zamiast jednego koloru \\
+\hline
+\texttt{dualMode} & bool & -- & Animacja z obu stron \\
+\hline
+\texttt{overlay} & bool & -- & Nakładanie na poprzedni efekt \\
+\hline
+\texttt{sparkleEnabled} & bool & -- & Włączenie iskier \\
+\hline
+\texttt{threePoint} & bool & -- & Trzeci punkt gradientu \\
+\hline
+\texttt{fade} & bool & -- & Wygaszanie krawędzi \\
+\hline
+\texttt{boost} & bool & -- & Wzmocnienie efektu \\
+\hline
+\texttt{multiMode} & bool & -- & Wiele niezależnych elementów \\
+\hline
+\texttt{darkMode} & bool & -- & Ciemne tło \\
+\hline
+\texttt{twoColor} & bool & -- & Tryb dwukolorowy \\
+\hline
+\texttt{randomColors} & bool & -- & Losowe kolory \\
+\hline
+\texttt{loop} & bool & -- & Zapętlenie sekwencji \\
+\hline
+\texttt{shootingStars} & bool & -- & Spadające gwiazdy \\
+\hline
+\end{longtable}
+
+\subsection{Palety kolorów}
+
+System wykorzystuje typ \texttt{CRGBPalette16} z biblioteki FastLED czyli 16-punktowy gradient interpolowany do 256 odcieni \cite{fastled}. Efekty oparte na paletach pobierają kolory funkcją \texttt{ColorFromPalette()}, co pozwala na płynne przejścia przy minimalnym narzucie pamięci.
+
+\subsubsection{Własne palety}
+
+W pliku \texttt{Palettes.h} zdefiniowano siedem dodatkowych palet dostosowanych do specyfiki konkretnych efektów:
+\textbf{Snow} -- odcienie bieli i błękitu dla efektów zimowych,
+\textbf{Aurora} -- zielenie i fiolety zorzy polarnej,
+\textbf{Sunset} -- ciepłe pomarańcze przechodzące w fiolety zachodu słońca,
+\textbf{Retro} -- neonowe kolory lat 80,
+\textbf{Christmas} -- tradycyjna czerwień, zieleń i biel świąteczna,
+\textbf{Halloween} -- pomarańcz, fiolet i czerń,
+\textbf{Cyber} -- cyberpunkowe połączenie cyjanu, magenty i neonowej zieleni.
+
+\subsubsection{Palety wbudowane w FastLED}
+
+Biblioteka FastLED dostarcza siedem predefiniowanych palet \cite{fastled}:
+\textbf{Rainbow} -- pełne spektrum tęczy,
+\textbf{Party} -- żywe kolory imprezowe,
+\textbf{Ocean} -- odcienie błękitu i zieleni,
+\textbf{Forest} -- kolory leśne,
+\textbf{Lava} -- czerwienie i pomarańcze lawy,
+\textbf{Heat} -- gradient ciepła od czerni przez czerwień do bieli,
+\textbf{Cloud} -- jasne odcienie nieba.
+
+Wybór palety odbywa się przez parametr \texttt{palette} typu \texttt{PaletteType} (wartości 0--13), a funkcja \texttt{getPalette()} mapuje indeks na odpowiednią strukturę \texttt{CRGBPalette16}.
+
+\section{Menedżer WiFi}
+
+Klasa \texttt{WiFiManager} (zaimplementowana w pliku \texttt{WiFiManager.h}) odpowiada za obsługę łączności bezprzewodowej w dwóch trybach: Access Point (AP) oraz Station (STA). Jest to implementacja autorska, gdzie biblioteki \texttt{WiFi.h} i \texttt{ESPmDNS.h} służą jako niskopoziomowe API. Moduł ten realizuje funkcjonalności takie jak: skanowanie sieci, monitorowanie stanu połączenia w oparciu o zdarzenia systemowe oraz obsługę protokołu mDNS.
+
+\subsection{Tryb Access Point}
+
+W trybie Access Point sterownik tworzy własną sieć WiFi, umożliwiając bezpośrednie połączenie z urządzeniem.
+Nazwa sieci (SSID) jest generowana dynamicznie na podstawie unikalnego adresu MAC układu ESP32, co pozwala na pracę wielu sterowników w jednym otoczeniu bez konfliktów nazw.
+Format SSID to: \texttt{PixelTree-XXXX}, gdzie \texttt{XXXX} to 4 ostatnie znaki adresu MAC (hex).
+
+Parametry AP zdefiniowane są w \texttt{Config.h}:
+\begin{itemize}
+    \item \textbf{Kanał:} 1 (stały, aby uniknąć przełączania między kanałami).
+    \item \textbf{Zabezpieczenia:} Sieć otwarta (w ograniczonym zasięgu sieci urządzenia nie ma potrzeby ustawiania hasła, a jego brak upraszcza proces łączenia).
+    \item \textbf{Limit klientów:} 4 urządzenia.
+\end{itemize}
+
+\subsection{Tryb Station i obsługa zdarzeń}
+
+W trybie Station sterownik łączy się z istniejącą siecią WiFi. Implementacja wykorzystuje mechanizm zdarzeń \texttt{WiFiEvent\_t} dostępny w Arduino Core dla ESP32 \cite{arduino-esp32}, co eliminuje konieczność aktywnego odpytywania stanu w pętli głównej i pozwala na natychmiastową reakcję na błędy.
+
+Kluczową funkcjonalnością jest wykrywanie błędnego hasła. Ponieważ ESP32 standardowo ponawia próby połączenia w nieskończoność w przypadku błędu uwierzytelniania, \texttt{WiFiManager} zlicza zdarzenia \texttt{WIFI\_REASON\_4WAY\_HANDSHAKE\_TIMEOUT}. Wystąpienie dwóch takich błędów z rzędu jest interpretowane jako błędne hasło (\texttt{CONN\_WRONG\_PASSWORD}), co pozwala na szybkie zwrócenie informacji zwrotnej do użytkownika zamiast oczekiwania na 30-sekundowy timeout.
+
+\subsection{Skanowanie sieci}
+
+Funkcja \texttt{scanNetworks()} zwraca listę dostępnych sieci w formacie JSON, posortowaną według siły sygnału (RSSI).
+Ze względu na ograniczenia rozmiaru pakietu BLE (512 bajtów), lista jest dynamicznie przycinana. Jeśli łączny rozmiar JSON przekracza limit (ustawiony na 480 bajtów), skanowanie jest przerywane, a do aplikacji trafiają tylko najsilniejsze sieci, które zmieściły się w buforze.
+
+\subsection{Obsługa mDNS}
+
+Aby umożliwić wykrywanie urządzenia w sieci lokalnej bez znajomości jego adresu IP, system uruchamia responder mDNS (Multicast DNS). Urządzenie rozgłasza usługę typu \texttt{\_http.\_tcp} pod nazwą hosta \texttt{PixelTree-XXXX.local}.
+Dodatkowo w rekordach TXT udostępniane są metadane identyfikujące urządzenie, co pozwala aplikacji mobilnej na automatyczne znalezienie sterownika w sieci lokalnej.
+
+\section{Konfiguracja WiFi poprzez BLE}
+Konfiguracja WiFi (ang. provisioning) realizowana jest za pośrednictwem technologii Bluetooth Low Energy. Moduł \texttt{BLEProvisioning.h} stanowi własną implementację protokołu, opartą na bibliotekach Arduino Core dla ESP32 \cite{arduino-esp32}. Zastosowanie BLE zamiast trybu Access Point umożliwia automatyczne wykrycie urządzenia i przekazanie danych uwierzytelniających bez konieczności ręcznego przełączania sieci w telefonie.
+
+\subsection{Bezpieczeństwo transmisji}
+
+Aby zapobiec przechwyceniu haseł do sieci WiFi przez osoby nieuprawnione, cała komunikacja zawierająca dane wrażliwe jest szyfrowana. Implementacja wykorzystuje protokół wymiany kluczy \textbf{ECDH} (Elliptic Curve Diffie-Hellman) na krzywej eliptycznej \textbf{SECP256R1} (P-256) oraz symetryczne szyfrowanie \textbf{AES-128} \cite{mbedtls}.
+
+Proces zabezpieczania połączenia przebiega następująco:
+\begin{enumerate}
+    \item Mikrokontroler generuje tymczasową parę kluczy: publiczny i prywatny przy starcie usługi BLE Provisioning.
+    \item Aplikacja mobilna pobiera klucz publiczny sterownika i przesyła własny klucz publiczny.
+    \item Obie strony niezależnie obliczają ten sam współdzielony sekret przy użyciu biblioteki \texttt{mbedtls}.
+    \item Hasło do sieci WiFi jest szyfrowane przez aplikację mobilną algorytmem AES-128, używając pierwszych 16 bajtów wygenerowanego sekretu jako klucza.
+\end{enumerate}
+
+Dzięki temu hasło nigdy nie jest przesyłane otwartym tekstem (ang. plaintext).
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (APP) at (0,0);
+        \coordinate (ESP) at (8,0);
+        
+        \node (app_node) at (APP) [draw, rectangle, minimum width=2.5cm, minimum height=1cm, thick] {\textbf{Aplikacja}};
+        \node (esp_node) at (ESP) [draw, rectangle, minimum width=2.5cm, minimum height=1cm, thick] {\textbf{ESP32}};
+        
+        \draw[dashed] (app_node.south) -- ++(0,-3.7);
+        \draw[dashed] (esp_node.south) -- ++(0,-3.7);
+        
+        % Klucz publiczny apki mobilnej
+        \draw[->, >=stealth, thick] (0,-1.2) -- node[above] {\small Klucz publiczny Aplikacji} (8,-1.2);
+        
+        % Klucz publiczny ESP
+        \draw[<-, >=stealth, thick] (0,-2.0) -- node[above] {\small Klucz publiczny ESP} (8,-2.0);
+        
+        % Obliczenia
+        \node at (4,-2.6) [draw, fill=white, dashed, rectangle, minimum width=4cm, align=center] {\small Obliczenie Wspólnego Sekretu};
+        
+        % Zdekodowane hasło
+        \draw[->, >=stealth, thick] (0,-3.6) -- node[above] {\small Szyfrowane hasło (AES)} (8,-3.6);
+        
+    \end{tikzpicture}
+    \caption{Uproszczony schemat wymiany kluczy ECDH}
+    \label{fig:ecdh-flow}
+\end{figure}
+
+\subsection{Struktura usług GATT}
+
+System udostępnia trzy główne usługi GATT, zdefiniowane w pliku \texttt{Config.h}:
+
+\begin{table}[H]
+\centering
+\caption{Usługi i charakterystyki BLE Provisioning}
+\label{tab:ble-services}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|l|p{7cm}|}
+\hline
+\textbf{Usługa / Charakterystyka} & \textbf{UUID (skrócone)} & \textbf{Opis funkcji} \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Usługa wymiany kluczy} -- 8e40...} \\
+\hline
+Publiczny Klucz ESP & ...0002 & Odczyt klucza publicznego urządzenia. \\
+\hline
+Publiczny Klucz Aplikacji & ...0003 & Przesłanie klucza publicznego aplikacji. \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Usługa skanowania WiFi} -- 6e40...} \\
+\hline
+Wyzwalacz Skanowania & ...0002 & Wartość '1' uruchamia skanowanie sieci. \\
+\hline
+Rezultat Skanowania & ...0003 & Odczyt listy sieci w formacie JSON. \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Usługa poświadczeń} -- 7e40...} \\
+\hline
+SSID (nazwa sieci) & ...0002 & Nazwa wybranej sieci WiFi. \\
+\hline
+Hasło & ...0003 & Zaszyfrowane hasło. \\
+\hline
+Wyzwalacz Połączenia & ...0004 & Wartość '1' rozpoczyna proces łączenia. \\
+\hline
+Status & ...0005 & \raggedright Powiadomienia o stanie (SUCCESS, WRONG\_PASSWORD, SSID\_NOT\_FOUND, AUTH\_FAILED, TIMEOUT). \tabularnewline
+\hline
+\end{tabular}
+\end{table}
+
+\section{Interfejs REST API}
+\label{sec:rest-api}
+
+Urządzenie udostępnia interfejs REST API na porcie 80. Zastosowano własną implementację logiki endpointów, wspieraną przez bibliotekę \texttt{ESPAsyncWebServer} działającą jako asynchroniczny serwer HTTP. W odpowiedziach serwera dodawany jest nagłówek CORS (Cross-Origin Resource Sharing), co stanowi podwaliny pod potencjalną, przyszłą integrację z aplikacjami webowymi. Formatem wymiany danych jest JSON.
+
+\subsection{Endpointy Konfiguracyjne}
+
+Grupa punktów końcowych (ang. endpoints) odpowiedzialna za skanowanie sieci i konfigurację połączenia WiFi.
+
+
+\vspace{1em}
+\noindent\textbf{Status urządzenia: \texttt{GET /api/status}} \\
+Zwraca podstawowe informacje o stanie urządzenia i połączeniu sieciowym.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/status}]
+{
+  "state": "idle",          // idle, scanning, connecting, success, failed
+  "connected": false,       // Stan polaczenia WiFi
+  "deviceName": "PixelTree-A1B2",   // Nazwa urzadzenia
+  "macSuffix": "A1B2",      // Ostatnie znaki adresu MAC z ESP32
+  "provisioned": false      // Czy zapisano dane logowania
+}
+\end{lstlisting}
+
+\noindent\textbf{Skanowanie sieci: \texttt{POST /api/scan}} \\
+Uruchamia asynchroniczny proces skanowania sieci WiFi. Zapytanie nie blokuje odpowiedzi, ale wynik będzie dostępny po ok. 2-3 sekundach pod innym endpointem.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/scan}]
+{
+  "status": "scanning_complete",    // Status skanowania
+  "count": 5                        // Liczba znalezionych sieci
+}
+\end{lstlisting}
+
+\noindent\textbf{Wyniki skanowania: \texttt{GET /api/networks}} \\
+Pobiera listę sieci znalezionych podczas ostatniego skanowania.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/networks}]
+[
+  {
+    "ssid": "Domowe_WiFi",  // Nazwa sieci (SSID)
+    "rssi": -65,            // Sila sygnalu (RSSI)
+    "secure": true          // Czy siec zabezpieczona
+  },
+  {
+    "ssid": "Januszex_Company",
+    "rssi": -80,
+    "secure": false         // Jesli false -> siec otwarta (bez hasla)
+  }
+]
+\end{lstlisting}
+
+\vspace{5em}
+\noindent\textbf{Ustawianie poświadczeń: \texttt{POST /api/provision}} \\
+Wysyła dane logowania do wybranej sieci.
+
+\begin{lstlisting}[language=java, caption={Przykładowa treść żądania dla /api/provision}]
+{
+  "ssid": "Janusz_WiFi",
+  "password": "TajneHaslo123"
+}
+\end{lstlisting}
+
+\subsection{Endpointy Sterowania LED}
+
+Umożliwiają pełną kontrolę nad efektami świetlnymi urządzenia PixelTree.
+
+\vspace{1em}
+\noindent\textbf{Status świecenia: \texttt{GET /api/led/status}} \\
+Zwraca kompletny stan sterownika, w tym aktualny efekt, jasność i zasilanie.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/led/status}]
+{
+  "power": true,           // true = wlaczone, false = wylaczone
+  "brightness": 200,       // 0-255
+  "effect": 1,             // ID aktualnego efektu
+  "effectName": "Rainbow", // Nazwa efektu
+  "category": 0,           // Kategoria w ktorej znajduje sie efekt
+  "numEffects": 42         // Liczba wszystkich efektow
+}
+\end{lstlisting}
+
+\noindent\textbf{Lista efektów: \texttt{GET /api/led/effects}} \\
+Zwraca listę wszystkich dostępnych efektów animacji wraz z ich kategoriami.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/led/effects}]
+[
+  {
+    "id": 0,                    // Identyfikator efektu
+    "name": "Solid Color",      // Nazwa efektu
+    "category": 0               // Id kategorii
+  },
+]
+\end{lstlisting}
+
+\noindent\textbf{Zmiana efektu: \texttt{POST /api/led/effect}} \\
+Przełącza aktualnie wyświetlany efekt.
+
+\begin{lstlisting}[language=java, caption={Przykładowa treść żądania dla /api/led/effect}]
+{
+  "id": 5                  // ID efektu
+}
+\end{lstlisting}
+
+\noindent\textbf{Pobranie parametrów: \texttt{GET /api/led/params}} \\
+Zwraca aktualne parametry wybranego efektu. Struktura JSON zależy od aktywnego efektu.
+
+\begin{lstlisting}[language=java, caption={Przykładowa odpowiedź /api/led/params}]
+{
+  "effect": 1,          // Id efektu
+  "params": {           // Przykladowe parametry
+    "speed": 120,
+    "intensity": 255,
+    "palette": 0
+  }
+}
+\end{lstlisting}
+
+\vspace{1em}
+\noindent\textbf{Zmiana parametrów: \texttt{POST /api/led/params}} \\
+Endpoint przyjmuje dynamiczny obiekt JSON, którego pola zależą od aktywnego efektu. Sterownik automatycznie rozpoznaje i aplikuje przesłane parametry. Format zgodny z \texttt{LEDController::setParam}.
+
+\begin{lstlisting}[language=java, caption={Przykładowa treść żądania dla /api/led/params}]
+{
+  "color": "#FF0000",      // Kolor w formacie HEX
+  "speed": 150,            // Szybkosc w zakresie 0-255
+  "intensity": 200,        // Intensywnosc w zakresie 0-255
+  "palette": 2             // ID palety kolorow
+}
+\end{lstlisting}
+
+\vspace{1em}
+\noindent\textbf{Sterowanie zasilaniem: \texttt{POST /api/led/power}} \\
+Włącza lub wyłącza diody (programowo, czyszcząc bufor).
+
+\begin{lstlisting}[language=java, caption={Przykładowa treść żądania dla /api/led/power}]
+{
+  "on": false              // true/false
+}
+\end{lstlisting}
+
+\vspace{1em}
+\noindent\textbf{Zmiana jasności: \texttt{POST /api/led/brightness}} \\
+Ustawia globalną jasność świecenia diod LED. Opcjonalny parametr \texttt{save} zapisuje ustawienie w pamięci nieulotnej.
+
+\begin{lstlisting}[language=java, caption={Przykładowa treść żądania dla /api/led/brightness}]
+{
+  "value": 128,            // Jasnosc w zakresie 0-255
+  "save": true             // (opcjonalny) zapis do NVS
+}
+\end{lstlisting}
+
+\section{Menedżer NVS}
+
+Trwałe przechowywanie konfiguracji urządzenia realizowane jest poprzez mechanizm NVS (Non-Volatile Storage) \cite{arduino-esp32}. W przeciwieństwie do biblioteki EEPROM, która emuluje pamięć na sektorach Flash, NVS wykorzystuje system par klucz-wartość, co ułatwia zarządzanie danymi o różnej długości i strukturze.
+
+Implementacja w klasie \texttt{NVSManager} opiera się na bibliotece \texttt{Preferences.h}, stanowiącej oficjalny interfejs Arduino Core dla ESP32 do obsługi NVS. Wszystkie dane zapisywane są w przestrzeni nazw (namespace) zdefiniowanej w pliku konfiguracyjnym jako \texttt{"pixeltree"}.
+
+\subsection{Organizacja danych}
+
+Poniższa tabela przedstawia zestaw kluczy wykorzystywanych przez system do zachowania stanu między restartami urządzenia.
+
+\begin{table}[H]
+    \centering
+    \caption{Mapa pamięci NVS}
+    \label{tab:nvs-map}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|p{8cm}|}
+    \hline
+    \textbf{Klucz (String)} & \textbf{Typ danych} & \textbf{Opis} \\
+    \hline
+    \texttt{wifi\_ssid} & String & Nazwa sieci WiFi (SSID) do której ma łączyć się sterownik. \\
+    \hline
+    \texttt{wifi\_pass} & String & Hasło do sieci WiFi (zapisywane jawnym tekstem, dostęp tylko z poziomu firmware). \\
+    \hline
+    \texttt{provisioned} & Bool & Flaga określająca czy urządzenie przeszło proces konfiguracji. \\
+    \hline
+    \texttt{led\_effect} & UInt8 & ID ostatnio wybranego efektu świetlnego. \\
+    \hline
+    \texttt{led\_bright} & UInt8 & Poziom jasności globalnej (0-255). \\
+    \hline
+    \texttt{led\_params} & String (JSON) & Parametry ostatniego efektu. \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Mechanizmy zarządzania pamięcią}
+
+Klasa \texttt{NVSManager} udostępnia statyczny interfejs do bezpiecznego zapisu i odczytu danych.
+
+\begin{itemize}
+    \item \textbf{Inicjalizacja (\texttt{begin}):} Podczas startu systemu menedżer otwiera przestrzeń nazw \texttt{pixeltree} w trybie odczytu i zapisu.
+    \item \textbf{Zapis atomowy:} Metody takie jak \texttt{saveCredentials} czy \texttt{saveEffect} dbają o to, aby dane zostały fizycznie zapisane w pamięci Flash.
+    \item \textbf{Factory Reset (\texttt{clearCredentials}):} Umożliwia całkowite usunięcie danych konfiguracyjnych i przywrócenie stanu fabrycznego. Operacja jest inicjowana poprzez zwarcie pinu \textbf{D10} (GPIO 9) do masy na 5 sekund. Również ustawienie flagi \texttt{DEV\_MODE} w \texttt{Config.h} wymusza ten proces przy każdym starcie systemu, co ułatwiało rozwój oraz testowanie oprogramowania.
+\end{itemize}
+
+% ============================================================================
+% ROZDZIAŁ 6: APKA MOBILNA
+% ============================================================================
+\chapter{Aplikacja mobilna}
+
+Aplikacja mobilna systemu PixelTree stanowi główny interfejs użytkownika, umożliwiający sterowanie oświetleniem z poziomu smartfona. Została wykonana w wieloplatformowym frameworku Flutter (opisanym w rozdziale~\ref{sec:esp32s3}), co pozwala na kompilację natywnych aplikacji zarówno na systemy Android, jak i iOS z jednej bazy kodu napisanej w języku Dart.
+
+\section{Architektura aplikacji}
+
+\subsection{Struktura warstwowa}
+
+Aplikacja została zaprojektowana zgodnie z wzorcem architektury warstwowej, który zapewnia separację odpowiedzialności między poszczególnymi komponentami systemu. Struktura katalogów projektu dzieli się na cztery główne moduły: rdzeń (core), dane (data), lokalizację (l10n) oraz prezentację (presentation). Kluczowy moduł \texttt{data/} realizuje wielowarstwową architekturę złożoną z serwisów, repozytoriów oraz źródeł danych, co przedstawia Rysunek~\ref{fig:mobile-arch}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        scale=0.8, transform shape,
+        layer/.style={rectangle, draw, thick, minimum height=1.2cm, align=center, fill=gray!10, font=\footnotesize},
+        sublayer/.style={rectangle, draw, minimum height=0.8cm, align=center, fill=white, font=\scriptsize},
+        arrow/.style={->, >=stealth, thick}
+    ]
+    
+    % Warstwa prezentacji
+    \node[layer, minimum width=12cm, fill=purple!15] (presentation) at (0, 4) {\textbf{Warstwa prezentacji (presentation/)}};
+    
+    % Ekrany
+    \node[sublayer, minimum width=10cm] (screens) at (0, 3) {Ekrany: Onboarding, DeviceScan, Provisioning, MyDevices, DeviceConnected, ...};
+    
+    % Warstwa serwisów
+    \node[layer, minimum width=12cm, fill=blue!15] (services) at (0, 1.5) {\textbf{Warstwa serwisów (data/services/)}};
+    
+    % Serwisy
+    \node[sublayer, minimum width=10cm] (servicesdetail) at (0, 0.5) {BLEProvisioningService, LEDControlService, DeviceDiscoveryService, ...};
+    
+    % Warstwa repozytoriów
+    \node[layer, minimum width=12cm, fill=green!15] (repos) at (0, -1) {\textbf{Warstwa repozytoriów (data/repositories/)}};
+    
+    % Repozytoria
+    \node[sublayer, minimum width=10cm] (reposdetail) at (0, -2) {BLEProvisioningRepository, DeviceRepository};
+    
+    % Warstwa źródeł danych
+    \node[layer, minimum width=12cm, fill=orange!15] (datasources) at (0, -3.5) {\textbf{Warstwa źródeł danych (data/datasources/)}};
+    
+    % Źródła danych
+    \node[sublayer, minimum width=10cm] (dsdetail) at (0, -4.5) {BLEDataSource, HTTPDataSource, CryptoDataSource, DeviceStorage};
+    
+    % Modele
+    \node[layer, minimum width=3.5cm, fill=yellow!20, minimum height=4cm] (models) at (8.5, -1) {\textbf{Modele}\\\footnotesize(data/models/)\\[0.3cm]\scriptsize PixelTreeDevice\\\scriptsize SavedDevice\\\scriptsize Effect\\\scriptsize WifiNetwork\\\scriptsize DiscoveredDevice};
+    
+    % Rdzeń
+    \node[layer, minimum width=3.5cm, fill=red!10, minimum height=2.5cm] (core) at (-8.5, -0.5) {\textbf{Rdzeń}\\\footnotesize(core/)\\[0.3cm]\scriptsize AppTheme\\\scriptsize AppColors\\\scriptsize BLEUUIDs\\\scriptsize EffectsData};
+    
+    % Strzałki przepływu
+    \draw[arrow] (screens) -- (services);
+    \draw[arrow] (servicesdetail) -- (repos);
+    \draw[arrow] (reposdetail) -- (datasources);
+    
+    % Strzałki do modeli
+    \draw[arrow, dashed] (services.east) -| (models.north);
+    \draw[arrow, dashed] (repos.east) -- (models.west);
+    \draw[arrow, dashed] (datasources.east) -| (models.south);
+    
+    % Strzałki do rdzenia
+    \draw[arrow, dashed] (presentation.west) -| (core.north);
+    \draw[arrow, dashed] (datasources.west) -| (core.south);
+    
+    \end{tikzpicture}
+    \caption{Diagram architektury warstwowej aplikacji mobilnej PixelTree}
+    \label{fig:mobile-arch}
+\end{figure}
+
+Przepływ danych w aplikacji odbywa się jednokierunkowo -- od warstwy prezentacji przez serwisy i repozytoria do źródeł danych. Moduły \texttt{core/} oraz \texttt{data/models/} są współdzielone przez poszczególne warstwy.
+
+\subsection{Organizacja plików źródłowych}
+
+Struktura katalogów projektu Flutter została zaprojektowana tak, aby odzwierciedlać podział architektoniczny. Katalog \texttt{lib/} zawiera cały kod źródłowy aplikacji, podzielony na następujące moduły:
+
+\begin{figure}[H]
+\centering
+\begin{forest}
+  for tree={
+    font=\ttfamily\footnotesize,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[lib/
+  [core/ \textnormal{\scriptsize -- konfiguracja globalna}
+    [constants/ \textnormal{\scriptsize -- sta\l{}e, definicje efekt\'ow}]
+    [theme/ \textnormal{\scriptsize -- motywy Material Design}]
+  ]
+  [data/ \textnormal{\scriptsize -- warstwa danych i logiki}
+    [datasources/ \textnormal{\scriptsize -- źródła danych}]
+    [models/ \textnormal{\scriptsize -- modele domenowe}]
+    [repositories/ \textnormal{\scriptsize -- repozytoria}]
+    [services/ \textnormal{\scriptsize -- serwisy wysokiego poziomu}]
+  ]
+  [l10n/ \textnormal{\scriptsize -- lokalizacja (PL/EN)}]
+  [presentation/ \textnormal{\scriptsize -- warstwa UI}
+    [screens/ \textnormal{\scriptsize -- ekrany aplikacji}]
+  ]
+  [main.dart \textnormal{\scriptsize -- punkt wejścia}]
+]
+\end{forest}
+\caption{Struktura katalogów aplikacji mobilnej}
+\label{fig:mobile-tree}
+\end{figure}
+
+\subsection{Opis warstw}
+
+\subsubsection{Warstwa źródeł danych (datasources)}
+
+Najniższa warstwa aplikacji odpowiada za bezpośrednią komunikację z zewnętrznymi systemami. Składa się z czterech modułów:
+
+\begin{itemize}
+    \item \textbf{BLEDataSource} -- realizuje niskopoziomowe operacje Bluetooth Low Energy takie jak: skanowanie urządzeń z filtrowaniem po UUID usługi, zarządzanie połączeniem, odkrywanie usług GATT oraz operacje odczytu i zapisu charakterystyk. Wykorzystuje bibliotekę \texttt{flutter\_blue\_plus}.
+    
+    \item \textbf{HTTPDataSource} -- implementuje komunikację HTTP z REST API sterownika. Obsługuje zapytania GET i POST do endpointów opisanych w rozdziale~\ref{sec:rest-api}.
+    
+    \item \textbf{CryptoDataSource} -- realizuje kryptografię ECDH (krzywa P-256) oraz szyfrowanie AES-128. Implementacja jest w pełni kompatybilna z kodem firmware opisanym w rozdziale~5.7.1.
+    
+    \item \textbf{DeviceStorage} -- zapewnia trwałe przechowywanie listy zapisanych urządzeń w formacie JSON, wykorzystując mechanizm \texttt{SharedPreferences}.
+\end{itemize}
+
+\subsubsection{Warstwa repozytoriów}
+
+Repozytoria agregują operacje na źródłach danych, ukrywając szczegóły implementacyjne przed warstwami wyższymi:
+
+\begin{itemize}
+    \item \textbf{BLEProvisioningRepository} -- koordynuje cały proces konfiguracji WiFi przez BLE, łącząc operacje skanowania, wymiany kluczy oraz transmisji zaszyfrowanych poświadczeń.
+    
+    \item \textbf{DeviceRepository} -- zarządza cyklem życia urządzeń: dodawanie, usuwanie oraz sprawdzanie dostępności zapisanych sterowników PixelTree.
+\end{itemize}
+
+\subsubsection{Warstwa serwisów}
+
+Serwisy implementują logikę biznesową aplikacji:
+
+\begin{itemize}
+    \item \textbf{BLEProvisioningService} -- orkiestruje proces konfiguracji urządzenia PixelTree poprzez BLE: wymianę kluczy, skanowanie sieci oraz transmisję zaszyfrowanych poświadczeń.
+    
+    \item \textbf{LEDControlService} -- realizuje sterowanie oświetleniem poprzez REST API. Implementuje optymalizacje UX takie jak throttling (ograniczanie częstotliwości żądań) dla suwaków aby nie obciążać sieci oraz samego kontrolera.
+    
+    \item \textbf{DeviceDiscoveryService} -- odkrywa urządzenia PixelTree w sieci lokalnej poprzez protokół mDNS, wykorzystując bibliotekę \texttt{bonsoir}. Serwis implementuje dwie strategie wyszukiwania: szybką, opartą o bezpośrednie odpytanie nazwy hosta urządzenia (np. \texttt{pixeltree-a1b2.local}), oraz pełny skan usług \texttt{\_http.\_tcp} z filtrowaniem po atrybucie MAC.
+    
+    \item \textbf{HTTPProvisioningService} -- alternatywna ścieżka konfiguracji WiFi przez HTTP w trybie Access Point. Serwis weryfikuje połączenie ze siecią PixelTree, po czym komunikuje się bezpośrednio z urządzeniem pod stałym adresem IP. W~tym trybie szyfrowanie nie jest wymagane, ponieważ komunikacja odbywa się w izolowanej sieci Point-to-Point.
+    
+    \item \textbf{ProvisioningService} -- abstrakcyjny interfejs definiujący wspólny kontrakt dla obu metod konfiguracji (BLE i HTTP). Plik zawiera również definicję maszyny stanów \texttt{ProvisioningState} oraz dedykowane wyjątki obsługujące błędy procesu, takie jak nieprawidłowe hasło WiFi czy brak sieci.
+\end{itemize}
+
+\subsubsection{Warstwa prezentacji}
+
+Warstwa prezentacji zawiera siedem ekranów aplikacji, z których każdy realizuje określony przypadek użycia:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\caption{Ekrany aplikacji mobilnej}
+\label{tab:mobile-screens}
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Ekran} & \textbf{Funkcjonalność} \\
+\hline
+OnboardingScreen & Ekran wprowadzający dla nowych użytkowników \\
+\hline
+ConnectionModeScreen & Wybór trybu połączenia (BLE lub Access Point) \\
+\hline
+DeviceScanScreen & Skanowanie i wybór urządzenia BLE \\
+\hline
+ProvisioningScreen & Proces konfiguracji WiFi przez BLE \\
+\hline
+APConnectionScreen & Instrukcje połączenia w trybie Access Point \\
+\hline
+MyDevicesScreen & Lista zapisanych urządzeń z statusem online/offline \\
+\hline
+DeviceConnectedScreen & Główny panel sterowania oświetleniem \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Zależności zewnętrzne}
+
+Aplikacja wykorzystuje szereg bibliotek zewnętrznych, które realizują specyficzne funkcjonalności niemożliwe lub trudne do zaimplementowania od podstaw:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\caption{Biblioteki zewnętrzne aplikacji mobilnej}
+\label{tab:mobile-deps}
+\begin{tabular}{|l|l|p{8cm}|}
+\hline
+\textbf{Biblioteka} & \textbf{Wersja} & \textbf{Zastosowanie} \\
+\hline
+flutter\_blue\_plus & 1.32.0 & Komunikacja Bluetooth Low Energy \\
+\hline
+dio & 5.4.0 & Klient HTTP do komunikacji z REST API \\
+\hline
+bonsoir & 6.0.1 & Odkrywanie urządzeń przez mDNS \\
+\hline
+pointycastle & 3.7.3 & Kryptografia ECDH i AES \\
+\hline
+shared\_preferences & 2.2.2 & Trwałe przechowywanie ustawień \\
+\hline
+google\_fonts & 6.1.0 & Typografia (czcionki Poppins i Inter) \\
+\hline
+flex\_color\_picker & 3.3.0 & Widget wyboru koloru dla parametrów efektów \\
+\hline
+permission\_handler & 11.0.1 & Zarządzanie uprawnieniami systemowymi \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Modele danych}
+
+Warstwa modeli definiuje struktury danych reprezentujące encje domenowe aplikacji. Każdy model jest niemutowalną klasą Dart (jej pola nie mogą być zmieniane po utworzeniu obiektu) z metodami serializacji JSON.
+
+\subsection{Modele urządzeń}
+
+Aplikacja rozróżnia trzy typy reprezentacji urządzenia PixelTree, odpowiadające różnym etapom cyklu życia:
+
+\begin{itemize}
+    \item \textbf{PixelTreeDevice} -- urządzenie wykryte podczas skanowania BLE, przechowuje obiekt połączenia, nazwę, siłę sygnału RSSI oraz status konfiguracji.
+    
+    \item \textbf{SavedDevice} -- urządzenie zapisane w pamięci trwałej po zakończeniu konfiguracji, zawiera identyfikator, nazwę, datę ostatniego połączenia i adres IP.
+    
+    \item \textbf{DiscoveredDevice} -- urządzenie odkryte w sieci lokalnej przez mDNS, przechowuje adres hosta do nawiązania połączenia HTTP.
+\end{itemize}
+
+\subsection{Model sieci WiFi}
+
+Klasa \texttt{WiFiNetwork} reprezentuje sieć WiFi wykrytą podczas skanowania. Przechowuje SSID, siłę sygnału i flagę zabezpieczenia. Metoda \texttt{getSignalBars()} kategoryzuje sygnał według progów:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\caption{Progi kategoryzacji siły sygnału WiFi}
+\label{tab:signal-thresholds}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Kategoria} & \textbf{Próg RSSI} & \textbf{Paski znacznika UI} \\
+\hline
+Znakomity & $\geq -50$ dBm & 4 \\
+\hline
+Dobry & $\geq -60$ dBm & 3 \\
+\hline
+Przeciętny & $\geq -70$ dBm & 2 \\
+\hline
+Słaby & $< -70$ dBm & 1 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Modele efektów świetlnych}
+
+Modele odzwierciedlają struktury danych z REST API (rozdział~\ref{sec:rest-api}):
+
+\begin{itemize}
+    \item \textbf{Effect} -- efekt świetlny z identyfikatorem, nazwą, kategorią i listą parametrów.
+    
+    \item \textbf{EffectParameter} -- parametr efektu z typem (\texttt{uint8}, \texttt{color}, \texttt{palette}, itp.), wartością domyślną i zakresem.
+    
+    \item \textbf{LEDStatus} -- aktualny stan sterownika: zasilanie, jasność, aktywny efekt.
+\end{itemize}
+
+\section{Warstwa komunikacji}
+
+Warstwa komunikacji realizuje całą wymianę danych między aplikacją mobilną a sterownikiem PixelTree. Implementacja obejmuje trzy kanały komunikacji: Bluetooth Low Energy, HTTP REST API oraz protokół mDNS.
+
+\subsection{Komunikacja BLE}
+
+Klasa \texttt{BLEDataSource} realizuje niskopoziomowe operacje BLE. Skanowanie urządzeń wykorzystuje filtrowanie po UUID usługi wymiany kluczy oraz walidację nazwy urządzenia. Po nawiązaniu połączenia następuje odkrycie usług GATT i zapisywanie charakterystyk w mapie \texttt{serviceUuid:charUuid}.
+
+Operacje GATT obejmują odczyt i zapis charakterystyk oraz subskrypcję powiadomień o statusie konfiguracji. Identyfikatory UUID są zdefiniowane w pliku \texttt{ble\_uuids.dart} i odpowiadają strukturze usług firmware przedstawionej w Tabeli~\ref{tab:ble-services}.
+
+\subsection{Komunikacja HTTP}
+
+Klasa \texttt{LEDControlService} implementuje klienta REST opartego na bibliotece \texttt{dio}. Metody serwisu odpowiadają endpointom firmware opisanym w rozdziale~\ref{sec:rest-api}. Dodatkowo serwis implementuje optymalizacje UX: metoda \texttt{setBrightnessThrottled()} ogranicza częstotliwość żądań do 50ms dla płynnej reakcji suwaka, a metoda \texttt{setParamDebounced()} opóźnia wysyłanie parametrów do momentu zakończenia edycji przez użytkownika.
+
+\subsection{Wyszukiwanie urządzeń w sieci}
+
+Klasa \texttt{DeviceDiscoveryService} wykorzystuje bibliotekę \texttt{bonsoir} do odkrywania urządzeń w sieci lokalnej. Serwis implementuje dwie strategie wyszukiwania: szybką, opartą o bezpośrednie odpytanie nazwy hosta, oraz pełny skan usług z filtrowaniem po atrybucie MAC.
+
+\section{Obsługa błędów}
+
+Obsługa błędów w aplikacji została zrealizowana wielowarstwowo. Każda warstwa stosuje mechanizm odpowiedni dla swojego poziomu abstrakcji.
+
+\vspace{1em}
+
+\textbf{Warstwa źródeł danych} przechwytuje wyjątki bibliotek zewnętrznych i mapuje je na czytelne komunikaty domenowe. Składnia \texttt{on Type catch} pozwala filtrować wyjątki według typu:
+
+\begin{lstlisting}[language=java, caption={Przykład mapowania wyjątków biblioteki Dio na komunikaty domenowe}, label={lst:ds-error}]
+on DioException catch (e) {
+  if (e.type == DioExceptionType.connectionTimeout ||
+      e.type == DioExceptionType.receiveTimeout) {
+    throw Exception('Device timeout - may be offline');
+  } else if (e.type == DioExceptionType.connectionError) {
+    throw Exception('Cannot reach device');
+  }
+  throw Exception('HTTP error: ${e.message}');
+}
+\end{lstlisting}
+
+\textbf{Warstwa repozytoriów} stosuje wzorzec \texttt{try-catch-rethrow}: przechwytuje wyjątki, oznacza proces jako nieudany i przekazuje błąd dalej:
+
+\begin{lstlisting}[language=java, caption={Przykładowe zastosowanie wzorca rethrow z aktualizacją stanu}, label={lst:repo-error}]
+try {
+  _setState(ProvisioningState.keyExchange);
+  // ... operacje ...
+  _setState(ProvisioningState.keyExchanged);
+} catch (e) {
+  _setState(ProvisioningState.failed);  // Aktualizacja stanu
+  rethrow;  // Propagacja do warstwy wyzej
+}
+\end{lstlisting}
+
+\textbf{Warstwa serwisów} implementuje mapowanie statusów urządzenia na dedykowane wyjątki domenowe, co umożliwia precyzyjną reakcję interfejsu:
+
+\begin{lstlisting}[language=java, caption={Przykład mapowania statusów na wyjątki domenowe}, label={lst:svc-error}]
+switch (status) {
+  case 'SUCCESS':
+    _setState(ProvisioningState.success);
+    return true;
+  case 'WRONG_PASSWORD':
+    _setState(ProvisioningState.wrongPassword);
+    throw WrongPasswordException();
+  case 'SSID_NOT_FOUND':
+    _setState(ProvisioningState.ssidNotFound);
+    throw SsidNotFoundException();
+  case 'AUTH_FAILED':
+    _setState(ProvisioningState.authFailed);
+    throw AuthFailedException();
+  case 'TIMEOUT':
+  default:
+    _setState(ProvisioningState.failed);
+    throw ConnectionTimeoutException();
+}
+\end{lstlisting}
+
+\textbf{Warstwa prezentacji} przechwytuje wszystkie wyjątki i reaguje aktualizacją interfejsu. Wyświetla ekrany lub banery błędów odpowiednie dla specyfiki błędu:
+
+\begin{lstlisting}[language=java, caption={Przykładowa obsługa błędów w warstwie UI}, label={lst:ui-error}]
+try {
+  await _ledService.setPower(value);
+} catch (e) {
+  _handleDisconnection();  // Pokazanie ekranu bledu z przyciskiem Retry
+}
+\end{lstlisting}
+
+Komunikaty błędów są lokalizowane za pomocą plików \texttt{.arb} i wyświetlane jako powiadomienia lub dedykowane dialogi z informacją o rodzaju problemu i sugestią jego rozwiązania.
+
+\section{Internacjonalizacja}
+
+Aplikacja obsługuje dwa języki: polski i angielski. Język interfejsu jest wybierany automatycznie na podstawie ustawień systemowych urządzenia. Jeśli system jest ustawiony na język polski, aplikacja wyświetla polski interfejs; dla wszystkich pozostałych języków stosowany jest angielski jako język domyślny. Mechanizm lokalizacji opiera się na wbudowanym pakiecie \texttt{flutter\_localizations} oraz formacie ARB (Application Resource Bundle), który jest standardowym formatem JSON używanym przez ekosystem Flutter~\cite{flutter}.
+
+\subsection{Pliki tłumaczeń}
+
+Teksty interfejsu są zdefiniowane w plikach \texttt{app\_pl.arb} i \texttt{app\_en.arb}. Format ARB wspiera tłumaczenia statyczne (proste ciągi znaków) oraz dynamiczne z parametrami w nawiasach klamrowych. Listing~\ref{lst:arb-example} przedstawia porównanie tłumaczeń:
+
+\begin{lstlisting}[language=java, caption={Porównanie plików lokalizacji PL/EN}, label={lst:arb-example}]
+// ===== app_pl.arb =====
+{
+  "@@locale": "pl",
+  "buttonRetry": "Ponow",
+  "provisioningWrongPassword": "Bledne haslo WiFi.",
+  "myDevicesRemoveMessage": "Usunac {deviceName} z zapisanych?"
+}
+// ===== app_en.arb =====
+{
+  "@@locale": "en",
+  "buttonRetry": "Retry",
+  "provisioningWrongPassword": "Wrong WiFi password.",
+  "myDevicesRemoveMessage": "Remove {deviceName} from saved?"
+}
+\end{lstlisting}
+
+\subsection{Generacja i użycie w kodzie}
+
+Podczas kompilacji narzędzie \texttt{flutter gen-l10n} generuje klasę \texttt{AppLocalizations} z typowanym dostępem do tłumaczeń. Takie podejście zapewnia bezpieczeństwo typów, ponieważ brakujące klucze lub nieprawidłowe typy parametrów są wykrywane już w trakcie kompilacji, a nie w runtime. Listing~\ref{lst:arb-usage} pokazuje przykładowy sposób użycia tłumaczeń:
+
+\begin{lstlisting}[language=java, caption={Użycie tłumaczeń w kodzie Dart}, label={lst:arb-usage}]
+// Tlumaczenie statyczne
+Text(AppLocalizations.of(context)?.buttonRetry ?? 'Retry')
+
+// Tlumaczenie z parametrem
+Text(AppLocalizations.of(context)?.myDevicesRemoveMessage(device.name))
+\end{lstlisting}
+
+\section{Interfejs użytkownika}
+
+Interfejs aplikacji został zaprojektowany z myślą o intuicyjności i przejrzystości. Użytkownik prowadzony jest przez kolejne etapy konfiguracji urządzenia za pomocą kreatorów z wyraźnymi wskazówkami. Aplikacja obsługuje zarówno tryb jasny, jak i ciemny -- w zależności od ustawień systemowych. Poniższe zrzuty ekranu przedstawiają interfejs w trybie ciemnym.
+
+\subsection{Onboarding}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{Screens/Splash_Screen.jpg}\hspace{0.5cm}
+\includegraphics[width=0.2\textwidth]{Screens/Welcome_Screen_1.jpg}\hspace{0.5cm}
+\includegraphics[width=0.2\textwidth]{Screens/Welcome_Screen_2.jpg}\hspace{0.5cm}
+\includegraphics[width=0.2\textwidth]{Screens/Welcome_Screen_3.jpg}
+\caption{Ekran powitalny oraz slajdy wprowadzające nowego użytkownika}
+\label{fig:screens-onboarding}
+\end{figure}
+
+\subsection{Wybór metody połączenia}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.22\textwidth]{Screens/Config_Method_Screen.jpg}\hspace{1cm}
+\includegraphics[width=0.22\textwidth]{Screens/AP_Screen.jpg}
+\caption{Ekran wyboru metody konfiguracji WiFi oraz instrukcja połączenia w trybie AP}
+\label{fig:screens-connection}
+\end{figure}
+
+\subsection{Konfiguracja WiFi przez BLE}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{Screens/BLE_Scan_Screen.jpg}\hspace{0.8cm}
+\includegraphics[width=0.2\textwidth]{Screens/BLE_Device_Select_Screen.jpg}
+\caption{Skanowanie urządzeń Bluetooth oraz wybór urządzenia PixelTree}
+\label{fig:screens-ble}
+\end{figure}
+
+\vspace{-0.3cm}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{Screens/Config_Screen_1.jpg}\hspace{0.3cm}
+\includegraphics[width=0.2\textwidth]{Screens/Config_Screen_2_1.jpg}\hspace{0.3cm}
+\includegraphics[width=0.2\textwidth]{Screens/Config_Screen_2_2.jpg}
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.2\textwidth]{Screens/Config_Screen_3.jpg}\hspace{0.3cm}
+\includegraphics[width=0.2\textwidth]{Screens/Config_Screen_4.jpg}
+\caption{Kreator konfiguracji WiFi}
+\label{fig:screens-provisioning}
+\end{figure}
+
+\subsection{Sterowanie urządzeniem}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{Screens/Select_Device_Screen.jpg}\hspace{1cm}
+\includegraphics[width=0.45\textwidth]{Screens/Control_Screen.jpg}
+\caption{Lista zapisanych urządzeń oraz główny ekran sterowania efektami świetlnymi}
+\label{fig:screens-control}
+\end{figure}
+
+% ============================================================================
+% ROZDZIAŁ 7: TESTY I WALIDACJA
+% ============================================================================
+\chapter{Testy i walidacja}
+
+Weryfikacja poprawności działania systemu PixelTree odbywała się na trzech poziomach: testy jednostkowe aplikacji mobilnej, debugowanie firmware z wykorzystaniem interfejsu szeregowego oraz walidacja integracyjna całego systemu na rzeczywistym sprzęcie.
+
+\section{Testy jednostkowe aplikacji mobilnej}
+
+Aplikacja mobilna została wyposażona w zestaw testów jednostkowych weryfikujących poprawność kluczowych komponentów. Testy napisano z wykorzystaniem wbudowanego narzędzia \newline\texttt{flutter\_test}, które umożliwia izolowane testowanie logiki biznesowej bez konieczności uruchamiania aplikacji.
+
+\subsection{Testy modeli danych}
+
+Testy modeli weryfikują poprawność serializacji i deserializacji danych JSON wymienianych z kontrolerem. Szczególną uwagę poświęcono obsłudze wartości domyślnych. Jeżeli odpowiedź API nie zawiera wszystkich pól, model powinien przyjąć bezpieczne, domyślne wartości zastępcze. \newline Listing~\ref{lst:test-model} przedstawia test modelu \texttt{LEDStatus}:
+
+\begin{lstlisting}[language=java, caption={Test deserializacji odpowiedzi API}, label={lst:test-model}]
+test('fromJson correctly parses full response', () {
+  final json = {
+    'power': true,
+    'brightness': 200,
+    'effect': 5,
+    'effectName': 'Rainbow Wave',
+  };
+
+  final status = LEDStatus.fromJson(json);
+
+  expect(status.power, true);
+  expect(status.brightness, 200);
+  expect(status.effectId, 5);
+});
+\end{lstlisting}
+
+\subsection{Testy modułu kryptograficznego}
+
+Moduł kryptograficzny \texttt{ECDHCryptoService} został przetestowany pod kątem poprawności całego przepływu bezpiecznej wymiany kluczy. Testy obejmują:
+\begin{itemize}
+    \item generowanie pary kluczy ECDH,
+    \item obliczanie wspólnego sekretu na podstawie klucza partnera,
+    \item szyfrowanie i deszyfrowanie hasła WiFi algorytmem AES-128,
+    \item obsługę błędów przy nieprawidłowym formacie klucza lub braku zainicjalizowanego sekretu.
+\end{itemize}
+
+\section{Testy firmware}
+
+Weryfikacja oprogramowania układowego odbywała się iteracyjnie podczas całego procesu rozwoju. Ze względu na ograniczenia środowiska embedded, głównym narzędziem diagnostycznym był monitor portu szeregowego.
+
+\subsection{Diagnostyka przez port szeregowy}
+
+Firmware wyposażono w rozbudowany system logowania komunikatów diagnostycznych. Komunikaty są kategoryzowane według modułu źródłowego i poziomu ważności. System informuje o:
+\begin{itemize}
+    \item inicjalizacji modułów,
+    \item przebiegu wymiany kluczy ECDH,
+    \item operacjach na charakterystykach BLE,
+    \item zmianach stanu połączenia WiFi i przydzielonym adresie IP,
+    \item żądaniach HTTP i czasach odpowiedzi,
+    \item błędach krytycznych wymagających interwencji.
+\end{itemize}
+
+Takie podejście umożliwiło szybkie debugowanie i identyfikację problemów napotkanych podczas rozwoju oprogramowania.
+
+\section{Testy warstwy sprzętowej}
+
+Weryfikacja poprawności działania układu elektronicznego odbywała się z wykorzystaniem multimetru cyfrowego jako podstawowego narzędzia pomiarowego.
+
+\subsection{Pomiary napięć i prądów}
+
+Weryfikację parametrów elektrycznych podzielono na dwa etapy. Przed fizycznym połączeniem modułów sprawdzono poziomy napięć, aby wykluczyć ryzyko uszkodzenia komponentów. Pomiary kontrolne obejmowały:
+\begin{itemize}
+    \item napięcie zasilacza sieciowego,
+    \item napięcie wyjściowe przetwornicy DC-DC,
+    \item napięcie zasilania mikrokontrolera,
+    \item poziom sygnału danych na wejściu i wyjściu modułu Pixel Boost.
+\end{itemize}
+
+W drugim etapie, po uruchomieniu kompletnego systemu, zmierzono całkowity pobór prądu oraz spadki napięcia przy maksymalnej jasności diod świecących w kolorze białym. Stanowi to przypadek graniczny, charakteryzujący się największym możliwym poborem mocy. Wyniki pomiarów wykazały, że układ zasilania utrzymuje stabilne parametry pracy. Napięcie zmierzone na końcu łańcucha LED, pomimo spadków, mieści się w zakresie tolerancji użytych diod.
+
+\subsection{Weryfikacja połączeń}
+
+Multimetr w trybie ciągłości posłużył do weryfikacji poprawności połączeń lutowanych, szczególnie pomiędzy kolejnymi diodami w łańcuchu. Sprawdzano brak zwarć między liniami zasilania, a linią sygnałową oraz ciągłość wszystkich połączeń od pierwszej do ostaniej diody.
+
+\section{Walidacja integracyjna}
+
+Ostatnim etapem testów było sprawdzenie całego systemu podczas rzeczywistej pracy. Weryfikację przeprowadzono na fizycznym prototypie PixelTree sterowanym z poziomu smartfona z systemem Android.
+
+\subsection{Scenariusze użytkowania}
+
+Testy oparte były na typowych czynnościach, jakie potencjalny użytkownik może wykonywać podczas codziennej eksploatacji urządzenia. Celem było upewnienie się, że system zachowuje się stabilnie i przewidywalnie w każdym z kluczowych etapów jego działania. 
+W szczególności zweryfikowano:
+
+\begin{enumerate}
+    \item \textbf{Konfigurację początkową} --- kompletny proces od pierwszego uruchomienia, przez wykrycie urządzenia, wymianę kluczy bezpieczeństwa, aż po podłączenie do domowej sieci WiFi.
+    \item \textbf{Tryb Access Point} --- sterowanie urządzeniem poprzez bezpośrednie połączenie z jego siecią.
+    \item \textbf{Automatyczne łączenie} --- weryfikacja czy aplikacja samoczynnie i szybko odnajduje urządzenie w sieci lokalnej po ponownym otwarciu.
+    \item \textbf{Niedostępność zapisanej sieci} --- weryfikacja automatycznego uruchomienia punktu dostępowego (AP) oraz interfejsu BLE w przypadku braku połączenia z zapisaną siecią WiFi.
+    \item \textbf{Sterowanie łańcuchem} --- płynność reakcji na zmianę efektów, regulację jasności oraz stabilność połączenia przy dłuższym użytkowaniu.
+    \item \textbf{Sytuacje awaryjne} --- zachowanie aplikacji w przypadku nagłej utraty połączenia lub błędu autoryzacji.
+\end{enumerate}
+
+\subsection{Test długoterminowy}
+
+Poza testami syntetycznymi, przeprowadzono weryfikację w warunkach typowego, codziennego użytkowania. Urządzenie działało nieprzerwanie przez 48 godzin, symulując normalną eksploatację w warunkach domowych. W tym czasie wielokrotnie uruchamiano aplikację w losowych momentach, aby zmienić efekt, a następnie ją zamykano. Celem tego eksperymentu nie była weryfikacja pojedynczej funkcjonalności, lecz sprawdzenie integralności całego systemu. Potwierdzono w ten sposób, że przy długotrwałej pracy urządzenie nie przegrzewa się, nie ulega zawieszeniu, aplikacja mobilna działa poprawnie, a komunikacja pozostaje stabilna.
+
+% ============================================================================
+% ROZDZIAŁ 8: WNIOSKI
+% ============================================================================
+\chapter{Wnioski}
+
+\section{Podsumowanie}
+
+W ramach pracy powstał kompletny, działający prototyp systemu PixelTree. Urządzenie zostało przetestowane w warunkach rzeczywistego użytkowania i spełnia założone wymagania funkcjonalne. Łańcuch 100 diod LED współpracuje płynnie z dedykowaną aplikacją mobilną, a proces konfiguracji WiFi przez Bluetooth przebiega intuicyjnie i bez problemów. 
+
+Realizacja wymagała połączenia wiedzy z kilku dziedzin: programowania niskopoziomowego, komunikacji bezprzewodowej, tworzenia aplikacji mobilnych i projektowania elektroniki. Każda z nich niosła własne wyzwania, ale właśnie ta różnorodność sprawiła, że projekt był ciekawy.
+
+\section{Osiągnięte cele}
+
+\begin{enumerate}
+    \item \textbf{Oprogramowanie układowe} -- stworzono kompletny firmware realizujący 42 efekty świetlne pogrupowane w 9 kategorii tematycznych. Oprogramowanie wykorzystuje architekturę dwurdzeniową, separując renderowanie animacji od obsługi komunikacji sieciowej, co zapewnia płynność animacji niezależnie od intensywności ruchu sieciowego.
+    
+    \item \textbf{Aplikacja mobilna} -- wykonano wieloplatformową aplikację we frameworku Flutter, umożliwiającą sterowanie urządzeniem z poziomu smartfona. Aplikacja obsługuje dwa tryby połączenia, oferuje interfejs w języku polskim i angielskim oraz wspiera zarządzanie wieloma urządzeniami PixelTree.
+    
+    \item \textbf{Bezpieczna konfiguracja} -- zaimplementowano mechanizm bezpiecznej transmisji poświadczeń WiFi podczas konfiguracji przez Bluetooth Low Energy. Protokół ECDH na krzywej P-256 w połączeniu z szyfrowaniem AES-128 zapewnia poufność przesyłanych haseł.
+    
+    \item \textbf{Obudowa sterownika} -- zaprojektowano i wykonano obudowę w technologii druku 3D, mieszczącą wszystkie komponenty elektroniczne. Projekt uwzględnia wentylację, otwory na złącza i przewody oraz ogólną estetykę produktu końcowego.
+    
+    \item \textbf{Integracja} -- warstwa sprzętowa, oprogramowanie układowe oraz aplikacja mobilna zostały połączone w kompletny produkt. Prototyp działa stabilnie we wszystkich przewidzianych przypadkach użycia i stanowi bazę do dalszego rozwoju.
+
+\end{enumerate}
+
+\section{Napotkane problemy}
+
+Realizacja projektu wiązała się z szeregiem wyzwań, zarówno na poziomie fizycznego montażu elektroniki, jak i implementacji oprogramowania:
+
+\begin{enumerate}
+    \item \textbf{Ręczny montaż łańcucha LED} -- każda ze 100 diod wymagała przylutowania sześciu przewodów oraz kondensatora filtrującego w miniaturowej obudowie. Precyzja i powtarzalność tego procesu stanowiły spore wyzwanie, szczególnie przy zachowaniu estetyki połączeń.
+    
+    \item \textbf{Konflikt stosu WiFi z animacjami LED} -- wstępna implementacja, w której cały kod działał na jednym rdzeniu procesora, powodowała widoczne ``zacinanie'' animacji podczas aktywnej komunikacji sieciowej. Problem rozwiązano poprzez wykorzystanie systemu FreeRTOS i separację zadań na dwa rdzenie.
+    
+    \item \textbf{Bezpieczeństwo transmisji BLE} -- hasło WiFi przesyłane przez Bluetooth Low Energy mogłoby zostać przechwycone przez osoby trzecie. Standardowe parowanie BLE wymaga jednak interakcji użytkownika na obu urządzeniach, co komplikuje konfigurację. Zamiast tego zaimplementowano szyfrowanie ECDH + AES, które chroni dane bez dodatkowych kroków dla użytkownika.
+    
+    \item \textbf{Niezgodność poziomów logicznych} -- mikrokontroler ESP32-S3 pracuje z logiką 3,3~V, podczas gdy diody WS2812D wymagają sygnału sterującego o napięciu minimum 3,5~V. Typowe konwertery poziomów logicznych wprowadzały zbyt duże opóźnienia dla protokołu WS2812. Problem rozwiązano poprzez zastosowanie dedykowanego modułu Pixel Boost z szybkim buforem cyfrowym.
+    
+    \item \textbf{Wykrywanie błędnego hasła WiFi} -- ESP32 domyślnie ponawia próby połączenia w nieskończoność, nie rozróżniając przyczyny niepowodzenia. Zidentyfikowanie błędnego hasła wymagało analizy zdarzeń systemowych i zliczania specyficznych kodów błędów, co pozwoliło na szybkie zwracanie informacji do użytkownika.
+    
+    \item \textbf{Ograniczenia rozmiaru pakietu BLE} -- maksymalny rozmiar charakterystyki BLE (512 bajtów) wymuszał dynamiczne przycinanie listy wykrytych sieci WiFi. Implementacja sortuje sieci według siły sygnału i przerywa serializację JSON po osiągnięciu limitu, gwarantując przesłanie najsilniejszych sieci.
+
+    \item \textbf{Rozmiar firmware} -- wykorzystane biblioteki przekraczały domyślny rozmiar partycji programu. Rozwiązaniem była modyfikacja schematu partycji pamięci Flash, zwiększająca przestrzeń dostępną dla aplikacji kosztem partycji OTA.
+\end{enumerate}
+
+\section{Możliwości rozwoju}
+
+Projekt w obecnej formie spełnia założone wymagania. Istnieje jednak wiele kierunków, w których można go dalej rozwijać, zarówno pod kątem funkcjonalności, jak i przygotowania do potencjalnej produkcji:
+
+\begin{itemize}
+    \item \textbf{Mapowanie przestrzenne 2D/3D} -- funkcja pozwalająca na odwzorowanie fizycznego położenia diod w przestrzeni, analogicznie do rozwiązań firmy Twinkly. Umożliwiłoby to precyzyjne renderowanie animacji niezależnie od kształtu ułożenia łańcucha lampek.
+    
+    \item \textbf{Obsługa wielu łańcuchów LED} -- sterowanie kilkoma niezależnymi łańcuchami diod z jednego sterownika, z osobnymi efektami lub synchronizacją. Wymagałoby to zmian zarówno w firmware, jak i w aplikacji mobilnej.
+    
+    \item \textbf{Integracja z systemami inteligentnego domu} -- obsługa protokołów Google Home, Amazon Alexa czy Home Assistant pozwoliłaby na włączenie PixelTree do szerszego ekosystemu automatyki domowej.
+    
+    \item \textbf{Harmonogramy czasowe} -- automatyczne włączanie i wyłączanie oświetlenia o określonych godzinach.
+    
+    \item \textbf{Synchronizacja z muzyką} -- efekty reagujące na dźwięk poprzez mikrofon lub wejście audio z analizą FFT w czasie rzeczywistym.
+    
+    \item \textbf{Rozbudowa interfejsu użytkownika} -- mimo że obecny UX jest funkcjonalny, warto byłoby dodać więcej języków, udoskonalić nawigację i wprowadzić dodatkowe opcje personalizacji.
+    
+    \item \textbf{Nowe efekty i refaktoryzacja systemu parametrów} -- obecna architektura efektów działa poprawnie, ale przemyślenie mechanizmu parametrów od nowa ułatwiłoby programowanie nowych animacji.
+    
+    \item \textbf{Optymalizacja rozmiaru firmware} -- zastąpienie dużych bibliotek zewnętrznych autorskimi, minimalistycznymi implementacjami pozwoliłoby znacząco zredukować rozmiar aplikacji.
+    
+    \item \textbf{Projekt produkcyjny sterownika} -- obecny prototyp spełnia swoją rolę, ale wersja produkcyjna wymagałaby diody statusu, przycisku factory reset, autorskiego PCB oraz zintegrowanej przetwornicy napięcia, co pozwoliłoby na stworzenie kompaktowej i lekkiej obudowy.
+    
+    \item \textbf{Automatyzacja procesu montażu} -- ręczne lutowanie łańcucha LED jest czasochłonne i niepraktyczne przy większej skali. Usprawnienie lub automatyzacja tego procesu byłaby kluczowa dla ewentualnej komercjalizacji produktu.
+\end{itemize}
+
+Wymienione kierunki rozwoju mogą stanowić punkt wyjścia do dalszych prac nad projektem, zarówno w ramach rozwoju hobbystycznego, jak i ewentualnej komercjalizacji.
+
+% ============================================================================
+% BIBLIOGRAFIA
+% ============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{ws2812b}
+Worldsemi, \emph{WS2812B Datasheet}, 2020.
+
+\bibitem{ws2812d}
+Worldsemi, \emph{WS2812D Datasheet}, 2021.
+
+\bibitem{ws2815}
+Worldsemi, \emph{WS2815 Datasheet}, 2018.
+
+\bibitem{esp32s3}
+Espressif Systems, \emph{ESP32-S3 Series Datasheet}, 2023, \url{https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf}.
+
+\bibitem{arduino-esp32}
+Espressif Systems, \emph{Arduino core for the ESP32}, \url{https://docs.espressif.com/projects/arduino-esp32/en/latest/}.
+
+\bibitem{esp8266}
+Espressif Systems, \emph{ESP8266EX Datasheet}, \url{https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf}.
+
+\bibitem{arduino-uno}
+Arduino, \emph{Arduino Uno Rev3 Technical Specifications}, \url{https://docs.arduino.cc/hardware/uno-rev3/}.
+
+\bibitem{rpi-pico}
+Raspberry Pi Foundation, \emph{Raspberry Pi Pico W Datasheet}, 2022.
+
+\bibitem{ble-spec}
+Bluetooth SIG, \emph{Bluetooth Core Specification v5.0}, 2016, \url{https://www.bluetooth.com/specifications/specs/core-specification-5-0/}.
+
+\bibitem{mdns-rfc}
+S. Cheshire, M. Krochmal, \emph{RFC 6762: Multicast DNS}, IETF, 2013, \url{https://datatracker.ietf.org/doc/html/rfc6762}.
+
+\bibitem{fastled}
+FastLED Library Documentation, \url{https://fastled.io/docs/}.
+
+\bibitem{neopixel}
+Adafruit Industries, \emph{Adafruit NeoPixel Library}, \url{https://github.com/adafruit/Adafruit_NeoPixel}.
+
+\bibitem{flutter}
+Flutter Documentation, \url{https://flutter.dev/docs}.
+
+\bibitem{wled}
+Aircoookie, \emph{WLED -- Control WS2812B LEDs with ESP8266/ESP32}, \url{https://github.com/Aircoookie/WLED}.
+
+\bibitem{twinkly}
+Twinkly, \emph{Smart Decoration Lighting}, \url{https://www.twinkly.com/}.
+
+\bibitem{philips-hue}
+Signify, \emph{Philips Hue Developer Program}, \url{https://developers.meethue.com/}.
+
+\bibitem{seeed-xiao}
+Seeed Studio, \emph{XIAO ESP32S3 Getting Started}, \url{https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/}.
+
+\bibitem{pixelboost}
+MSX Elektronika, \emph{Moduł Pixel Boost -- bufor napięcia 3,3V/5V dla diod WS2812B}, Botland, \url{https://botland.com.pl/lancuchy-i-matryce-led/8790-modul-pixel-boost-bufor-napiecia-33v5v-dla-diod-ws2812b-5904422375928.html}.
+
+\bibitem{dcdc-aliexpress}
+\emph{Przetwornica DC-DC Step Down z 12-24V na 5V 10A}, AliExpress, \url{https://pl.aliexpress.com/item/1005006506300187.html}.
+
+\bibitem{psu-aliexpress}
+\emph{Zasilacz impulsowy 24V 3A}, AliExpress, \url{https://pl.aliexpress.com/item/1005007422490865.html}.
+
+\bibitem{ws2812d-chain}
+\emph{50 sztuk - dioda WS2812D RGB koralik }, AliExpress, \url{https://pl.aliexpress.com/item/1005005871456289.html}.
+
+\bibitem{przewod-avt}
+\emph{Przewód miedziany 0.35mm² -- specyfikacja techniczna}, AVT, \url{https://sklep.avt.pl/data/links/3877857a7ee14b26629c05e3afe28213/168291_20492.pdf}.
+
+\bibitem{samsung-cap}
+Samsung Electro-Mechanics, \emph{Multilayer Ceramic Capacitors (MLCC) Datasheet}, \url{https://www.tme.eu/Document/4a42202b32dab16128fe107dd69598cc/samsung-chip-cap.pdf}.
+
+\bibitem{openscad}
+OpenSCAD, \emph{The Programmers Solid 3D CAD Modeller}, \url{https://openscad.org/}.
+
+\bibitem{mbedtls}
+Mbed TLS Documentation, \url{https://mbed-tls.readthedocs.io/en/latest/}.
+
+\end{thebibliography}
+
+% ============================================================================
+% ZAŁĄCZNIKI
+% ============================================================================
+\appendix
+
+\chapter{Kod źródłowy}
+
+Ze względu na obszerność kodu źródłowego, pełna implementacja nie została umieszczona w treści pracy. Kod źródłowy wszystkich komponentów projektu jest dostępny w publicznym repozytorium GitHub:
+
+\vspace{2em}
+
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+\textbf{Repozytorium projektu PixelTree}\\[0.5em]
+{\small\url{https://github.com/TexablePlum/PixelTree}}
+
+\vspace{1.5em}
+
+\textbf{Zawiera moduły:}
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{Firmware/} -- oprogramowanie układowe
+    \item \textbf{App/} -- aplikacja mobilna Flutter
+    \item \textbf{Case/} -- modele obudowy (OpenSCAD)
+    \item \textbf{LaTeX/} -- źródła niniejszej pracy
+\end{itemize}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\vspace{-0.8em}
+\includegraphics[width=5.5cm]{QR-for-TexablePlum.png}\\[0.3em]
+{\small\textit{Zeskanuj kod QR, aby otworzyć}}
+\end{minipage}
 
 \end{document}

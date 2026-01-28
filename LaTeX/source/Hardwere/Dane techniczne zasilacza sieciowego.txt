@@ -1,0 +1,14 @@
+Dane techniczne:
+Napięcie wejściowe: AC100-240V 50/60Hz
+Napięcie wyjściowe: DC 24 V
+Prąd wyjściowy: 2A /3A ±5%
+Materiał powłoki: tworzywo sztuczne
+Kolory powłoki: biały
+Temperatura pracy: 0 ~ 40°C
+Temperatura przechowywania: -20 ~ 60°C
+
+Cechy:
+Wbudowane zabezpieczenie przed przepięciem, przetężeniem i zwarciem
+Konstrukcja PWM zapewnia stabilność i wysoką wydajność zasilania.
+Anti-jamming, przeszedł test EMC, fala mniejsza niż 20MV.
+Stałe napięcie wyjściowe, załóż stabilne zasilanie oświetlenia LED, aby osiągnąć długą żywotność

@@ -1,0 +1,23 @@
+Opis produktu: Moduł Pixel Boost - bufor napięcia 3,3V/5V dla diod WS2812B
+Moduł wykorzystywany do sterowania diodami WS2812B w przypadku mikrokontrolerów z logiką 3,3 V.  Zawiera bufor, który pozwala na konwersję napięć. Wymiary modułu to 18 x 8 mm.
+
+Specyfikacja modułu Pixel Boost
+Napięcie zasilania 5 V
+Przeznaczenie: sterowanie diodami LED RGB WS2812B
+Wymiary listwy: 18 x 8 mm
+
+Podłączenie modułu
+Urządzenie posiada cztery wyprowadzenia:
+GND - masa modułu
+VCC - napięcie zasilania 5 V
+DIN - cyfrowy sygnał sterujący z mikrokontrolera o napięciu 3,3 V
+DOUT - wyjście do podłączenia diod LED WS2812 o napięciu 5 V
+
+Moduł Pixel Boost to bardzo praktyczne rozwiązanie dla elektroników tworzących projekty elektroniczne z wykorzystaniem diod LED oraz mikrokontrolerów. Moduł umożliwia sterowanie diodami LED zasilanymi napięciem 5 V (WS2812) przy pomocy mikrokontrolera o nominalnym napięciu 3,3 V (na przykład Arduino).
+
+Płytka Pixel Boost jest bardzo prosta w obsłudze i cechuje się małymi rozmiarami, a także bardzo niewielkim poborem prądu. Dzięki temu doskonale sprawdzi się w najróżniejszych projektach elektronicznych wykorzystujących mikrokontrolery i oświetlenie LED WS2812. Urządzenie zostało zaprojektowane i skonstruowane przez renomowaną polską markę MSX Elektronika.
+
+Lekki i wygodny bufor napięcia 3,3 V/5 V do diod LED WS2812
+Moduł Pixel Boost ma wymiary zaledwie 18 x 8 mm, dzięki czemu można wykorzystać go nawet w najmniejszych projektach elektronicznych. Produkt charakteryzuje się dużą trwałością i niezawodnym działaniem.
+
+W naszej ofercie znajdziesz również inne akcesoria do diod LED, takie jak oprawki, zasilacze, moduły zasilające czy sterowniki. Ponadto nasz asortyment obejmuje bardzo duży wybór rozmaitych elementów oświetlenia LED, między innymi łańcuchy i matryce LED, lampy zewnętrzne, oświetlenie dekoracyjne, paski i taśmy LED, lampy wewnętrzne i stołowe, latarki zasilane bateryjnie, lampki choinkowe, inteligentne żarówki LED i wiele innych.

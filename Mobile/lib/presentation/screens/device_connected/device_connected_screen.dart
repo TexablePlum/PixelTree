@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/effect.dart';
-import '../../../data/effects_data.dart';
+import '../../../core/constants/effects_data.dart';
 import '../../../data/services/led_control_service.dart';
 import '../../../l10n/app_localizations.dart';
 

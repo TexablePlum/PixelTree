@@ -1,0 +1,27 @@
+Typ: konwerter prądu stałego
+
+Napięcie wejściowe: DC 12 V-24 V
+
+Zakres napięcia wejściowego: DC 10 V-30 V
+
+Napięcie wyjściowe: DC 5 V
+
+Prąd wyjściowy: 3A/5A/10A/15A
+
+Temperatura pracy: -40-85°C
+
+Rozmiar: 64mm*53mm*20mm(1,81 cala*1,26 cala*0,71 cala)
+
+
+
+Funkcja
+
+Wysoka wydajność, żywotność do 100 000 godzin.
+
+Podczas normalnych testów wyjście przetwornicy jest chwilowo zwierane do masy, co nie powoduje uszkodzenia przetwornicy mocy.
+
+Wyjściowy prąd obciążenia jest zbyt duży, a moduł mocy nie jest uszkodzony.Zmniejsz współczynnik uszkodzeń zasilacza.
+
+Zasilanie jest nieprawidłowe, a napięcie wyjściowe jest wyższe niż ustawiona wartość.Zabezpieczenie ma na celu ochronę urządzeń elektrycznych ładujących przed uszkodzeniem.
+
+Temperatura otoczenia roboczego konwertera może wynosić od -40°C do 85°C.Gdy temperatura powłoki przekracza 85°C, konwerter automatycznie chroni.
